@@ -20,9 +20,9 @@ export default function Page() {
             <nav className="flex justify-between items-center py-4 px-10  relative z-10">
                 <h1 className="text-2xl font-bold">Prise Médoc.</h1>
                 <ul className="flex gap-4">
-                    <li className="text-md"><Link href="#about" className="hover:text-[#77FFB2] transition-colors">À propos</Link></li>
-                    <li className="text-md"><Link href="#features" className="hover:text-[#77FFB2] transition-colors">Fonctionnalités</Link></li>
-                    <li className="text-md"><Link href="#contact" className="hover:text-[#77FFB2] transition-colors">Contact</Link></li>
+                    <li className="text-md"><Link href="#about" className="hover:text-[#3b803b] transition-colors">À propos</Link></li>
+                    <li className="text-md"><Link href="#features" className="hover:text-[#3b803b] transition-colors">Fonctionnalités</Link></li>
+                    <li className="text-md"><Link href="#contact" className="hover:text-[#3b803b] transition-colors">Contact</Link></li>
                 </ul>
                 <div className="flex gap-4">
                     <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>Se connecter</Button>
@@ -89,6 +89,10 @@ export default function Page() {
         <div className="mx-[10%] mt-[5%] flex flex-col">
             {/* A propos HERE*/}
             <section id="about">
+            <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-70 z-0 transform scale-x-150"></div>
+            <div className="absolute top-15 -left-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
+            <div className="absolute top-15 -right-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
+            <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-15 z-0 transform "></div>
                 <div className="flex flex-row my-[10%] gap-20">
                     <div className="w-1/3 ">
                         <img src="img/oublie.png" alt="medicament" className="h-full"/>
