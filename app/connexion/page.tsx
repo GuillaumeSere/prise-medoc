@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";    
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth } from "../../src/lib/firebase"; 
+import { auth } from "../../src/lib/firebase";
 import { Button } from "../../src/components/ui/button";
-
+import Link from "next/link";
 
 export default function Connexion() {
     const [email, setEmail] = useState("");
@@ -14,19 +14,19 @@ export default function Connexion() {
     const provider = new GoogleAuthProvider();  // on importe le provider Google pour l'authentification
 
     const connexionFn = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password) // la fonction signInWithEmailAndPassword de firebase pour se connecter
-        .then((userCredential) => {
-        // Connexion réussie
-        const user = userCredential.user;
-        console.log("Utilisateur connecté :", user);
-        router.push("/dashboard");
-        })
-        .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Erreur de connexion :", errorCode, errorMessage);
-        });
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password) // la fonction signInWithEmailAndPassword de firebase pour se connecter
+            .then((userCredential) => {
+                // Connexion réussie
+                const user = userCredential.user;
+                console.log("Utilisateur connecté :", user);
+                router.push("/dashboard");
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error("Erreur de connexion :", errorCode, errorMessage);
+            });
     };
 
 
@@ -61,10 +61,14 @@ export default function Connexion() {
             <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-15 z-0 transform "></div>
             {/*  gauche */}
             <div className="w-1/2 h-full relative z-10 flex flex-col justify-between ">
-                <h3 className="text-4xl mb-[2%] relative font-bold z-10">
-                    Bienvenue sur <br /> Prise Médoc.
-                </h3>
-
+                <div>
+                    <Link href="/" className="text-[#000000] hover:text-[#6996b7] mb-4 transition-colors inline-block">
+                        ← Retour à l'accueil
+                    </Link>
+                    <h3 className="text-4xl relative font-bold z-10">
+                        Bienvenue sur <br /> Prise Médoc.
+                    </h3>
+                </div>
                 <div className="flex flex-col gap-5 relative z-10">
                     <div className="flex flex-row gap-5 items-center">
                         <img className="h-7 w-7" src="icon/forme-abstraite2.png" alt="forme verte" />
@@ -87,7 +91,7 @@ export default function Connexion() {
                     </div>
                 </div>
                 <h3 className="text-xl font-bold mt-10 relative z-10">
-                Prise Médoc.
+                    Prise Médoc.
                 </h3>
             </div>
 

@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "../src/components/ui/button";
 import { Card, CardContent } from "../src/components/ui/card";
 
@@ -19,13 +20,12 @@ export default function Page() {
             <nav className="flex justify-between items-center py-4 px-10  relative z-10">
                 <h1 className="text-2xl font-bold">Prise Médoc.</h1>
                 <ul className="flex gap-4">
-                    <li className="text-md">Accueil</li>
-                    <li className="text-md">À propos</li>
-                    <li className="text-md">Fonctionnalités</li>
-                    <li className="text-md">Contact</li>
+                    <li className="text-md"><Link href="#about" className="hover:text-[#77FFB2] transition-colors">À propos</Link></li>
+                    <li className="text-md"><Link href="#features" className="hover:text-[#77FFB2] transition-colors">Fonctionnalités</Link></li>
+                    <li className="text-md"><Link href="#contact" className="hover:text-[#77FFB2] transition-colors">Contact</Link></li>
                 </ul>
                 <div className="flex gap-4">
-                    <Button className="bg-[#77FFB2] text-black hover:text-white" onClick={() => router.push("/dashboard")}>Se connecter</Button>
+                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>Se connecter</Button>
                 </div>
             </nav>
 
@@ -38,8 +38,8 @@ export default function Page() {
                 </p>
 
                 <div className="flex gap-4 mt-10">
-                    <Button className="bg-[#77FFB2] text-black hover:text-white" onClick={() => router.push("/dashboard")}>C’est partie !</Button>
-                    <Button className="bg-white text-black shadow-sm hover:text-white" onClick={() => router.push("#about")}>
+                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>C'est partie !</Button>
+                    <Button variant="default" size="default" className="bg-white text-black shadow-sm hover:text-white cursor-pointer" onClick={() => router.push("#about")}>
                     Comment ça marche ?
                     </Button>
                 </div>
@@ -76,7 +76,7 @@ export default function Page() {
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Rappels fiables</h3>  
-                            <p className="text-sm">Recevez vos rappels à l’heure prévue. Plus besoin de se poser de question.</p>
+                            <p className="text-sm">Recevez vos rappels à l'heure prévue. Plus besoin de se poser de question.</p>
                         </div>
                     </CardContent>          
                 </Card>   
@@ -97,17 +97,17 @@ export default function Page() {
                         <h2 className="text-4xl font-bold">Ne ratez plus jamais un médicament.</h2>
                         <p className="my-4 text-lg max-w-2xl">
                             Tout a commencé avec ma mère, qui oubliait souvent de prendre ses médicaments.Rien de grave… sauf quand ça devient quotidien. 
-                            Il fallait lui rappeler,et souvent vérifier. Et je me suis dit : “Pourquoi ne pas créer une application simple, faite pour elle ?”
+                            Il fallait lui rappeler,et souvent vérifier. Et je me suis dit : "Pourquoi ne pas créer une application simple, faite pour elle ?"
                             Prise Médoc est né de là.
                             Créer une app accessible, douce, utile, qui ne complique pas les choses mais qui les rend plus faciles. 
-                            Parce qu’un simple rappel au bon moment, ça peut vraiment faire la différence.
+                            Parce qu'un simple rappel au bon moment, ça peut vraiment faire la différence.
                         </p>
-                        <Button className="w-fit self-start bg-[#77FFB2] text-black hover:text-white" onClick={()=> router.push("/dashboard")}>C’est partie !</Button>
+                        <Button variant="default" size="default" className="w-fit self-start bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={()=> router.push("/dashboard")}>C'est partie !</Button>
                     </div>
                 </div>
             </section>
             {/* fonctionnalité */}
-            <Card className="bg-gradient-to-b from-[#88C8FF] to-[#ffffff] my-[5%]">
+            <Card className="bg-gradient-to-b from-[#88C8FF] to-[#ffffff] my-[5%]" id="features">
                 <CardContent className="flex flex-row justify-between items-center gap-4 items-stretch">
                     <Card className={"w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]" }>
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
@@ -115,7 +115,7 @@ export default function Page() {
                                 <img src="img/medic.png" alt="medicaments" />
                             </div>
                             <h5>Ajout & gestion des médicaments</h5>
-                            <p className="text-sm">Ajoutez un traitement en quelques secondes, choisissez l’heure de prise et laissez l’application s’en charger. Simple, rapide et efficace.</p>
+                            <p className="text-sm">Ajoutez un traitement en quelques secondes, choisissez l'heure de prise et laissez l'application s'en charger. Simple, rapide et efficace.</p>
                         </CardContent>
                     </Card>
                     <Card className={"w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]"}>
@@ -124,7 +124,7 @@ export default function Page() {
                                 <img src="img/push.png" alt="push" />
                             </div>
                             <h5>Rappels & notifications</h5>
-                            <p className="text-sm">Recevez une alerte au bon moment. Plus besoin d’y penser, Prise Médoc vous le rappelle.</p>
+                            <p className="text-sm">Recevez une alerte au bon moment. Plus besoin d'y penser, Prise Médoc vous le rappelle.</p>
                         </CardContent>
                     </Card>
                     <Card className={"w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]"}>
@@ -133,7 +133,7 @@ export default function Page() {
                                 <img src="img/checklist.png" alt="checklist" />
                             </div>
                             <h5>Suivi de prise</h5>
-                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme “pris” ou “oublié”. Le statut s’affiche pour mieux suivre la journée.</p>
+                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme "pris" ou "oublié". Le statut s'affiche pour mieux suivre la journée.</p>
                         </CardContent>
                     </Card>
                     <Card className={"w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]"}>
@@ -150,7 +150,7 @@ export default function Page() {
 
 
             {/* Contact HERE */}
-            <div className="flex flex-row gap-20 my-[15%]">
+            <div className="flex flex-row gap-20 my-[15%]" id="contact">
                 <div className="w-1/2 flex flex-col">
                     <h2 className="text-4xl font-bold color-[#008CFF]">Contactez-moi</h2>
                  
@@ -171,12 +171,12 @@ export default function Page() {
                     <Card className="bg-gradient-to-b from-[#88C8FF] to-[#ffffff] ">
                         <CardContent className="flex flex-col gap-4 m-10">
                             <h5>Restons en contact</h5>
-                            <p className="text-sm">Vous pouvez aussi m’écrire directement via le formulaire de contact. Je vous répondrai dès que possible.</p>
+                            <p className="text-sm">Vous pouvez aussi m'écrire directement via le formulaire de contact. Je vous répondrai dès que possible.</p>
                             <form className="flex flex-col gap-4 ">
                                 <input type="text" placeholder="Nom" className="border-b border-black p-2" />
                                 <input type="email" placeholder="Email" className="border-b border-black p-2" />
                                 <textarea placeholder="Message" className="border-b border-black p-2"></textarea>
-                                <Button type="submit" className="w-fit self-start bg-[#77FFB2] text-black">Envoyer</Button>
+                                <Button variant="default" size="default" type="submit" className="w-fit self-start bg-[#77FFB2] text-black cursor-pointer">Envoyer</Button>
                             </form>
                         </CardContent>
                     </Card>
