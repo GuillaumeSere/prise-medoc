@@ -64,90 +64,71 @@ export default function Dashboard() {
     return (
         <div className="">
             <div className="flex flex-col w-full h-full">
-                <h3 className="text-4xl mb-[2%] relative z-10">
+                <h3 className="text-2xl sm:text-4xl mb-[2%] relative z-10">
                     <span className="font-bold">Salut {user?.displayName?.split(" ")[0] || ""} !  <br /></span>
                     Tu as pris tes médicaments ?
                 </h3>
                 <div className="flex gap-5 relative z-10">
                     <Card className="w-1/2 flex flex-col justify-between p-4 mr-2 bg-white/25 backdrop-blur-md shadow-xl">
                         <CardContent className="">
-                            <h4 className="text-7xl">0{medicaments.filter(medicament => medicament.pris).length}</h4>
+                            <h4 className="text-4xl sm:text-7xl">0{medicaments.filter(medicament => medicament.pris).length}</h4>
                         </CardContent>
                         <CardFooter className="">
-                            <p className="font-medium">Déjà pris</p>
+                            <p className="text-sm sm:text-base font-medium">Déjà pris</p>
                         </CardFooter>
                     </Card>
 
                     <Card className="w-1/2 flex flex-col justify-between p-4 bg-white/25 backdrop-blur-md shadow-xl">
                         <CardContent className="">
-                            <h4 className="text-7xl">0{medicaments.length}</h4>
+                            <h4 className="text-4xl sm:text-7xl">0{medicaments.length}</h4>
                         </CardContent>
                         <CardFooter className="">
-                            <p className="font-medium">A prendre</p>
+                            <p className="text-sm sm:text-base font-medium">A prendre</p>
                         </CardFooter>
                     </Card>
                 </div>
                 
                 <Card className="flex flex-col justify-between w-full h-full mt-4 bg-white/25 backdrop-blur-md shadow-xl relative z-10">
-                    <CardContent>
+                    <CardContent className="p-6">
                         <div className="flex flex-row justify-between items-center mb-5">
-                            <h3 className="text-md font-medium ">Médicaments à prendre</h3>
-                            <div className="flex flex-row  gap-3">
-                                <p >Ajouter</p>
-                                <button className="cursor-pointer"
-                                onClick={() => router.push("dashboard/add_medicament")}
-                                >
-                                    <img
-                                    src="icon/ajouter-un-bouton.png"
-                                    alt="plus"
-                                    className="w-7 h-7 transition-transform duration-200 ease-in-out hover:scale-110"
-                                    />
+                            <h3 className="text-sm sm:text-md font-medium">Médicaments à prendre</h3>
+                            <div className="flex flex-row gap-3">
+                                <p className="text-sm sm:text-base">Ajouter</p>
+                                <button className="cursor-pointer" onClick={() => router.push("dashboard/add_medicament")}>
+                                    <img src="icon/ajouter-un-bouton.png" alt="plus" className="w-5 h-5 sm:w-7 sm:h-7 transition-transform duration-200 ease-in-out hover:scale-110" />
                                 </button>
                             </div>
                         </div>
-                        <div className="flex flex-col w-full items-center justify-center gap-4 ">
+                        <div className="flex flex-col w-full items-center justify-center gap-4">
                             {medicaments.length > 0 ? (
                                 medicaments.map((medicament) => (
-                                    <Card
-                                    key={medicament.id}
-                                    className={`w-full flex flex-row justify-between items-center p-4 shadow-xl transition-colors duration-300 ${
-                                        medicament.pris ? 'bg-[#455A64]/45' : 'bg-white/30 backdrop-blur-md'
-                                    }`}>       
+                                    <Card key={medicament.id} className={`w-full flex flex-row justify-between items-center p-4 shadow-xl transition-colors duration-300 ${medicament.pris ? 'bg-[#455A64]/45' : 'bg-white/30 backdrop-blur-md'}`}>       
                                         <div className={`${medicament.pris ? 'text-white' : 'text-black'}`}>
-                                            <CardHeader>
-                                                <h3 className={`text-2xl font-bold ${medicament.pris ? 'line-through decoration-black' : ''}`}>
+                                            <CardHeader className="p-0">
+                                                <h3 className={`text-lg sm:text-2xl font-bold ${medicament.pris ? 'line-through decoration-black' : ''}`}>
                                                     {medicament.nom}
                                                 </h3>
                                             </CardHeader>
-                                            <CardContent>
-                                                <p className="text-lg">Heure de prise : {medicament.heure}</p>
+                                            <CardContent className="p-0">
+                                                <p className="text-base sm:text-lg">Heure de prise : {medicament.heure}</p>
                                             </CardContent>
                                         </div>
                                         <div className="flex flex-col items-center justify-center">
-                                            <button
-                                            onClick={() => medicamenPris(medicament.id)}
-                                            className={medicament.pris ? '' : 'cursor-pointer'}
-                                            >
-                                            <img
-                                                src={medicament.pris ? "/icon/coche_white.png" : "/icon/coche.png"}
-                                                alt="coche"
-                                                className={`w-10 h-10 ${medicament.pris ? '' : 'transition-transform duration-200 ease-in-out hover:scale-110'}`}
-                                            />
+                                            <button onClick={() => medicamenPris(medicament.id)} className={medicament.pris ? '' : 'cursor-pointer'}>
+                                                <img src={medicament.pris ? "/icon/coche_white.png" : "/icon/coche.png"} alt="coche" className={`w-8 h-8 sm:w-10 sm:h-10 ${medicament.pris ? '' : 'transition-transform duration-200 ease-in-out hover:scale-110'}`} />
                                             </button>
-
                                         </div>
                                     </Card>
                                 ))
                             ) : (
                                 <Card className="w-full flex flex-row justify-between items-center p-4 shadow-xl bg-white/20 backdrop-blur-md">
                                     <div>
-                                        <p className="text-xl ">Aucun médicament à prendre</p>
+                                        <p className="text-lg sm:text-xl">Aucun médicament à prendre</p>
                                     </div>
                                 </Card>
                             )}
                         </div>
                     </CardContent>
-
                 </Card>
             
             </div>

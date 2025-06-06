@@ -48,9 +48,9 @@ export default function Connexion() {
 
     return (
         <div
-            className="rounded-2xl m-5 flex flex-row relative overflow-hidden gap-70 py-[3%] px-[5%] relative z-10"
+            className="rounded-2xl m-2 md:m-5 flex flex-col md:flex-row relative overflow-hidden gap-4 md:gap-70 py-[3%] px-[5%] relative z-10"
             style={{
-                height: "calc(100vh - 2.5rem)",
+                minHeight: "calc(100vh - 2.5rem)",
                 boxShadow: "0 12px 24px rgba(0, 0, 0, 0.15)",
             }}
         >
@@ -63,77 +63,81 @@ export default function Connexion() {
             <div className="absolute top-15 -left-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
             <div className="absolute top-15 -right-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
             <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-15 z-0 transform "></div>
+
             {/*  gauche */}
-            <div className="w-1/2 h-full relative z-10 flex flex-col justify-between ">
+            <div className="w-full md:w-1/2 h-full relative z-10 flex flex-col justify-between p-4 md:p-0">
                 <div>
-                    <Link href="/" className="text-[#000000] hover:text-[#6996b7] mb-4 transition-colors inline-block">
+                    <Link href="/" className="text-[#000000] hover:text-[#3b803b] mb-4 transition-colors inline-block">
                         ← Retour à l'accueil
                     </Link>
-                    <h3 className="text-4xl relative font-bold z-10">
+                    <h3 className="text-2xl md:text-4xl relative font-bold z-10">
                         Bienvenue sur <br /> Prise Médoc.
                     </h3>
                 </div>
-                <div className="flex flex-col gap-5 relative z-10">
-                    <div className="flex flex-row gap-5 items-center">
-                        <img className="h-7 w-7" src="icon/forme-abstraite2.png" alt="forme verte" />
+                <div className="flex flex-col gap-5 relative z-10 mt-8 md:mt-0">
+                    <div className="flex flex-row gap-5 items-start">
+                        <img className="h-7 w-7 mt-1" src="icon/forme-abstraite2.png" alt="forme verte" />
                         <div className="flex flex-col gap-2">
-                            <h4 className="text-xl">Accède à tes informations personnelles</h4>
+                            <h4 className="text-lg md:text-xl">Accède à tes informations personnelles</h4>
                             <p className="text-sm text-gray-600">
-                                Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd’hui et gérer tes rappels.
+                                Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd'hui et gérer tes rappels.
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex flex-row gap-5 items-center">
-                        <img className="h-7 w-7" src="icon/forme-abstraite2.png" alt="forme verte" />
+                    <div className="flex flex-row gap-5 items-start">
+                        <img className="h-7 w-7 mt-1" src="icon/forme-abstraite2.png" alt="forme verte" />
                         <div className="flex flex-col gap-2">
-                            <h4 className="text-xl">Un espace sécurisé rien que pour toi</h4>
+                            <h4 className="text-lg md:text-xl">Un espace sécurisé rien que pour toi</h4>
                             <p className="text-sm text-gray-600">
-                                Ton espace est personnel et protégé. Reprends là où tu t’étais arrêté, en toute tranquillité.
+                                Ton espace est personnel et protégé. Reprends là où tu t'étais arrêté, en toute tranquillité.
                             </p>
                         </div>
                     </div>
                 </div>
-                <h3 className="text-xl font-bold mt-10 relative z-10">
+                <h3 className="text-lg md:text-xl font-bold mt-10 relative z-10">
                     Prise Médoc.
                 </h3>
             </div>
 
-
             {/* droite */}
-            <div className="w-1/2 min-h-[400px] bg-white p-[5%] shadow-xl rounded-2xl flex flex-col items-center justify-center relative z-10">
-                <h2 className="text-3xl font-bold ">Se connecter</h2>
-                <p className="text-gray-600 text-sm mb-6"> Vous avez déjà un compte ?{" "}
+            <div className="w-full md:w-1/2 min-h-[400px] bg-white p-4 md:p-[5%] shadow-xl rounded-2xl flex flex-col items-center justify-center relative z-10 mt-4 md:mt-0">
+                <h2 className="text-2xl md:text-3xl font-bold text-center">Se connecter</h2>
+                <p className="text-gray-600 text-sm mb-6 text-center"> Vous avez déjà un compte ?{" "}
                     <span
                         className="text-blue-600 cursor-pointer hover:underline"
                         onClick={() => router.push("/inscription")}>
                         S'inscrire
                     </span>
                 </p>
-                <form onSubmit={connexionFn} className="flex flex-col gap-4">
+                <form onSubmit={connexionFn} className="flex flex-col gap-4 w-full max-w-md">
                     <input
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="p-2 rounded-md border border-gray-300"
+                        className="p-2 rounded-md border border-gray-300 w-full"
                     />
                     <input
                         type="password"
                         placeholder="Mot de passe"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="p-2 rounded-md border border-gray-300"
+                        className="p-2 rounded-md border border-gray-300 w-full"
                     />
-                    <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
+                    <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 transition-colors">
                         Se connecter
                     </button>
                     <div className="border-t border-gray-300 my-4"></div>
-                    <Button className="bg-white text-blac border border-gray-600 w-full justify-center hover:bg-gray-100 cursor-pointer"
-                        onClick={connexionGoogle}>
+                    <Button 
+                        variant="default"
+                        size="default"
+                        className="bg-white text-black border border-gray-600 w-full justify-center hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                        onClick={connexionGoogle}
+                    >
                         <img src="icon/google-logo.png" alt="google"
-                            className="w-5 h-5 " />
-                        Google
+                            className="w-5 h-5" />
+                        <span>Continuer avec Google</span>
                     </Button>
                 </form>
             </div>

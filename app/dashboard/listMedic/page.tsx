@@ -8,10 +8,17 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "../../../src/hook/user_verif";
 
+interface Medicament {
+    id: string;
+    uid: string;
+    nom: string;
+    heure: string;
+}
+
 export default function ListMedic() {
     const { user, loading } = useCurrentUser();// on utilise le hook pour vérifier si l'utilisateur est connecté
     const router = useRouter();
-    const [medicaments, setMedicaments] = useState([]);
+    const [medicaments, setMedicaments] = useState<Medicament[]>([]);
 
     // fonction pour supprimer un médicament
     const supprimerMedicament = async (id) => {
@@ -37,7 +44,7 @@ export default function ListMedic() {
             try {
                 const getMedicaments = await getDocs(collection(db, "medicaments"));
                 const medicamentsData = getMedicaments.docs
-                    .map((doc) => ({ id: doc.id, ...doc.data() })) // on récupère les données des médicaments
+                    .map((doc) => ({ id: doc.id, ...doc.data() } as Medicament))
                     .filter((med) => med.uid === user.uid); // filtrer par utilisateur connecté
                 setMedicaments(medicamentsData);
             } catch (error) {
@@ -57,38 +64,35 @@ export default function ListMedic() {
                 La liste de tes médicaments bien sûr !
             </h3>
             <Card className="flex flex-col justify-between w-full h-full mt-4 bg-white/25 backdrop-blur-md shadow-xl relative z-10">
-                <CardContent>
+                <CardContent className="p-6">
                     <div className="flex flex-row justify-between items-center relative z-10 mb-5">
-                        <h3 className="text-md font-medium ">Tes médicaments enregistrés</h3>
-                        <div className="flex flex-row  gap-3">
-                            <p >Ajouter</p>
+                        <h3 className="text-md font-medium">Tes médicaments enregistrés</h3>
+                        <div className="flex flex-row gap-3">
+                            <p>Ajouter</p>
                             <button className="cursor-pointer"
-                            onClick={() => router.push("add_medicament")}
+                                onClick={() => router.push("add_medicament")}
                             >
                                 <img
-                                src="../icon/ajouter-un-bouton.png"
-                                alt="plus"
-                                className="w-7 h-7 transition-transform duration-200 ease-in-out hover:scale-110"
+                                    src="../icon/ajouter-un-bouton.png"
+                                    alt="plus"
+                                    className="w-7 h-7 transition-transform duration-200 ease-in-out hover:scale-110"
                                 />
                             </button>
                         </div>
                     </div>
-                    <div className="flex flex-col w-full items-center justify-center gap-4 ">
+                    <div className="flex flex-col w-full items-center justify-center gap-4">
                         {medicaments.map((medicament) => (
                             <Card key={medicament.id} className="w-full flex flex-row justify-between items-center p-4 shadow-xl bg-white/20 backdrop-blur-md">
                                 <div>
-                                    <CardHeader>
-                                    <h3 className="text-2xl font-bold">{medicament.nom}</h3>
+                                    <CardHeader className="p-0">
+                                        <h3 className="text-2xl font-bold">{medicament.nom}</h3>
                                     </CardHeader>
-                                    <CardContent>
-                                    <p className="text-lg">Heure de prise : {medicament.heure}</p>
+                                    <CardContent className="p-0">
+                                        <p className="text-lg">Heure de prise : {medicament.heure}</p>
                                     </CardContent>
                                 </div>
-                    
-                                {/* param  */}
                                 <div className="flex gap-2">
                                     <Param onModif={modificationMedicament} onDelete={supprimerMedicament} id={medicament.id} />
-                                    
                                 </div>
                             </Card>
                         ))}

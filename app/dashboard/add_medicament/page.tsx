@@ -93,7 +93,7 @@ export default function MedicamentForm() {
         {medicamentId ? "Modifier le médicament" : "Ajouter un médicament"}
       </h3>
       <Card className="flex flex-col justify-between w-full h-full mt-4 p-[2%] bg-white/25 backdrop-blur-md shadow-xl relative z-10">
-        <CardHeader>
+        <CardHeader className="p-0">
           <h4 className="text-lg font-medium">
             {medicamentId ? "Modifier le médicament" : "Ajoute un nouveau médicament"}
           </h4>
@@ -124,8 +124,10 @@ export default function MedicamentForm() {
           </div>
 
           <Button
-          type="submit"
-          className="inline-flex  p-5 bg-white/20 rounded-4xl text-white font-bold items-center justify-center self-end hover:bg-white/30 cursor-pointer shadow-xl border-black/20 border-b-4 border-[#407BFF] transition-transform duration-200 ease-in-out hover:scale-105"
+            variant="default"
+            size="default"
+            type="submit"
+            className="inline-flex p-5 bg-white/20 rounded-4xl text-white font-bold items-center justify-center self-end hover:bg-white/30 cursor-pointer shadow-xl border-black/20 border-b-4 border-[#407BFF] transition-transform duration-200 ease-in-out hover:scale-105"
           >
             <img src="../icon/fleche-droite.png" alt="fleche suivant" className="w-10 h-10" />
           </Button>
@@ -134,19 +136,18 @@ export default function MedicamentForm() {
 
         {/* Modale déclenchée par l'état */}
         <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
+          <AlertDialogContent className="bg-white">
+            <AlertDialogHeader className="space-y-2">
+              <AlertDialogTitle className="text-xl font-bold">
                 {medicamentId ? "Médicament modifié !" : "Médicament ajouté !"}
               </AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogDescription className="text-gray-600">
                 Que souhaitez-vous faire ensuite ?
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
+            <AlertDialogFooter className="flex gap-2">
               <AlertDialogCancel className="w-1/2" onClick={() => setIsModalOpen(false)}>
                 {medicamentId ? "Continuer à modifier" : " Ajouter un autre médicament !"}
-               
               </AlertDialogCancel>
               <AlertDialogAction className="w-1/2" onClick={() => router.push("/dashboard")}>
                 Retour au Dashboard

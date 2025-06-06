@@ -106,8 +106,8 @@
        display: flex;
       }
       .icon{
-        justify-content: space-around !important;
         width: 100% !important;
+       
       }
       .card{
         width: 350px !important;
