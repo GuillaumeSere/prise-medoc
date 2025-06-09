@@ -74,7 +74,7 @@ export default function ListMedic() {
                                 onClick={() => router.push("add_medicament")}
                             >
                                 <Image
-                                    src="../icon/ajouter-un-bouton.png"
+                                    src="/icon/ajouter-un-bouton.png"
                                     alt="plus"
                                     layout="fixed"
                                     width={28}
