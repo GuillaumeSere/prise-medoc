@@ -17,9 +17,9 @@ export function Param({ onModif ,onDelete, id }) {
         <img src="../icon/param.png" alt="button param" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem onClick={() => onModif(id)}>Modifier</DropdownMenuItem> 
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => onDelete(id)}>Supprimer</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" inset={false} onClick={() => onModif(id)}>Modifier</DropdownMenuItem> 
+        <DropdownMenuSeparator className="my-1" />
+        <DropdownMenuItem className="cursor-pointer" inset={false} onClick={() => onDelete(id)}>Supprimer</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

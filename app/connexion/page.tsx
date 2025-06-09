@@ -68,7 +68,7 @@ export default function Connexion() {
             <div className="w-full md:w-1/2 h-full relative z-10 flex flex-col justify-between p-4 md:p-0">
                 <div>
                     <Link href="/" className="text-[#000000] hover:text-[#3b803b] mb-4 transition-colors inline-block">
-                        ← Retour à l'accueil
+                        ← Retour à l&apos;accueil
                     </Link>
                     <h3 className="text-2xl md:text-4xl relative font-bold z-10">
                         Bienvenue sur <br /> Prise Médoc.
@@ -80,7 +80,7 @@ export default function Connexion() {
                         <div className="flex flex-col gap-2">
                             <h4 className="text-lg md:text-xl">Accède à tes informations personnelles</h4>
                             <p className="text-sm text-gray-600">
-                                Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd'hui et gérer tes rappels.
+                                Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd&apos;hui et gérer tes rappels.
                             </p>
                         </div>
                     </div>
@@ -90,7 +90,7 @@ export default function Connexion() {
                         <div className="flex flex-col gap-2">
                             <h4 className="text-lg md:text-xl">Un espace sécurisé rien que pour toi</h4>
                             <p className="text-sm text-gray-600">
-                                Ton espace est personnel et protégé. Reprends là où tu t'étais arrêté, en toute tranquillité.
+                                Ton espace est personnel et protégé. Reprends là où tu t&apos;étais arrêté, en toute tranquillité.
                             </p>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ export default function Connexion() {
                     <span
                         className="text-blue-600 cursor-pointer hover:underline"
                         onClick={() => router.push("/inscription")}>
-                        S'inscrire
+                        S&apos;inscrire
                     </span>
                 </p>
                 <form onSubmit={connexionFn} className="flex flex-col gap-4 w-full max-w-md">
