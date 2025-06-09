@@ -12,12 +12,29 @@ export default function Inscription() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
   const provider = new GoogleAuthProvider();  // on importe le provider Google pour l'authentification
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const inscriptionFn = (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!validateEmail(email)) {
+      setError("Veuillez entrer une adresse email valide");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Le mot de passe doit contenir au moins 6 caractères");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password) // la fonction createUserWithEmailAndPassword de firebase pour créer un utilisateur
       .then((userCredential) => { 
         // Inscription réussie
@@ -31,8 +48,24 @@ export default function Inscription() {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Erreur d'inscription :", errorCode, errorMessage);
+        let errorMessage = "";
+        
+        switch (errorCode) {
+          case "auth/invalid-email":
+            errorMessage = "L'adresse email n'est pas valide";
+            break;
+          case "auth/email-already-in-use":
+            errorMessage = "Cette adresse email est déjà utilisée";
+            break;
+          case "auth/weak-password":
+            errorMessage = "Le mot de passe est trop faible";
+            break;
+          default:
+            errorMessage = "Une erreur est survenue lors de l'inscription";
+        }
+        
+        setError(errorMessage);
+        console.error("Erreur d'inscription :", errorCode, error.message);
       });
   };
 
@@ -105,6 +138,11 @@ export default function Inscription() {
             Se connecter
           </span>  
         </p>
+        {error && (
+          <div className="w-3/4 mb-4 p-3 bg-red-100 text-red-600 rounded-xl text-sm">
+            {error}
+          </div>
+        )}
         <form onSubmit={inscriptionFn} className="flex flex-col gap-4 w-3/4">
           <input
             type="text"
