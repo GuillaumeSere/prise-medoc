@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "../../src/components/ui/card";
+import Image from "next/image";
 
 import { collection, getDocs, doc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "../../src/lib/firebase";
@@ -95,7 +96,7 @@ export default function Dashboard() {
                             <div className="flex flex-row gap-3">
                                 <p className="text-sm sm:text-base">Ajouter</p>
                                 <button className="cursor-pointer" onClick={() => router.push("dashboard/add_medicament")}>
-                                    <img src="icon/ajouter-un-bouton.png" alt="plus" className="w-5 h-5 sm:w-7 sm:h-7 transition-transform duration-200 ease-in-out hover:scale-110" />
+                                    <Image src="/icon/ajouter-un-bouton.png" alt="plus" width={28} height={28} className="w-5 h-5 sm:w-7 sm:h-7 transition-transform duration-200 ease-in-out hover:scale-110" />
                                 </button>
                             </div>
                         </div>
@@ -115,7 +116,7 @@ export default function Dashboard() {
                                         </div>
                                         <div className="flex flex-col items-center justify-center">
                                             <button onClick={() => medicamenPris(medicament.id)} className={medicament.pris ? '' : 'cursor-pointer'}>
-                                                <img src={medicament.pris ? "/icon/coche_white.png" : "/icon/coche.png"} alt="coche" className={`w-8 h-8 sm:w-10 sm:h-10 ${medicament.pris ? '' : 'transition-transform duration-200 ease-in-out hover:scale-110'}`} />
+                                                <Image src={medicament.pris ? "/icon/coche_white.png" : "/icon/coche.png"} alt="coche" width={40} height={40} className={`w-8 h-8 sm:w-10 sm:h-10 ${medicament.pris ? '' : 'transition-transform duration-200 ease-in-out hover:scale-110'}`} />
                                             </button>
                                         </div>
                                     </Card>

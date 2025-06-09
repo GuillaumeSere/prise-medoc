@@ -5,6 +5,7 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import { auth } from "../../src/lib/firebase";
 import { Button } from "../../src/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Connexion() {
     const [email, setEmail] = useState("");
@@ -76,7 +77,7 @@ export default function Connexion() {
                 </div>
                 <div className="flex flex-col gap-5 relative z-10 mt-8 md:mt-0">
                     <div className="flex flex-row gap-5 items-start">
-                        <img className="h-7 w-7 mt-1" src="icon/forme-abstraite2.png" alt="forme verte" />
+                        <Image className="h-7 w-7 mt-1" src="/icon/forme-abstraite2.png" alt="forme verte" width={28} height={28} />
                         <div className="flex flex-col gap-2">
                             <h4 className="text-lg md:text-xl">Accède à tes informations personnelles</h4>
                             <p className="text-sm text-gray-600">
@@ -86,7 +87,7 @@ export default function Connexion() {
                     </div>
 
                     <div className="flex flex-row gap-5 items-start">
-                        <img className="h-7 w-7 mt-1" src="icon/forme-abstraite2.png" alt="forme verte" />
+                        <Image className="h-7 w-7 mt-1" src="/icon/forme-abstraite2.png" alt="forme verte" width={28} height={28} />
                         <div className="flex flex-col gap-2">
                             <h4 className="text-lg md:text-xl">Un espace sécurisé rien que pour toi</h4>
                             <p className="text-sm text-gray-600">
@@ -135,8 +136,7 @@ export default function Connexion() {
                         className="bg-white text-black border border-gray-600 w-full justify-center hover:bg-gray-100 cursor-pointer flex items-center gap-2"
                         onClick={connexionGoogle}
                     >
-                        <img src="icon/google-logo.png" alt="google"
-                            className="w-5 h-5" />
+                        <Image src="/icon/google-logo.png" alt="google" width={20} height={20} className="w-5 h-5" />
                         <span>Continuer avec Google</span>
                     </Button>
                 </form>

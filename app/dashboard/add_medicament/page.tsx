@@ -17,6 +17,7 @@ import {
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardHeader } from "../../../src/components/ui/card";
 import useCurrentUser from "../../../src/hook/user_verif";
+import Image from "next/image";
 
 export default function MedicamentForm() {
   const { user, loading } = useCurrentUser(); 
@@ -129,7 +130,7 @@ export default function MedicamentForm() {
             type="submit"
             className="inline-flex p-5 bg-white/20 rounded-4xl text-white font-bold items-center justify-center self-end hover:bg-white/30 cursor-pointer shadow-xl border-black/20 border-b-4 border-[#407BFF] transition-transform duration-200 ease-in-out hover:scale-105"
           >
-            <img src="../icon/fleche-droite.png" alt="fleche suivant" className="w-10 h-10" />
+            <Image src="/icon/fleche-droite.png" alt="fleche suivant" width={40} height={40} className="w-10 h-10" />
           </Button>
 
         </form>

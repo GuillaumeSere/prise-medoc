@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "../src/components/ui/button";
 import { Card, CardContent } from "../src/components/ui/card";
 import { useState } from "react";
@@ -90,7 +91,7 @@ export default function Page() {
                 <Card className="w-full md:w-1/3 flex flex-col justify-between items-center bg-white/20 backdrop-blur-md shadow-xl">
                     <CardContent className="flex flex-row items-center gap-4">
                         <div>
-                            <img src="icon/verifier.svg" alt="check" />
+                            <Image src="/icon/verifier.svg" alt="check" width={24} height={24} />
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Simplicité</h3>  
@@ -101,7 +102,7 @@ export default function Page() {
                 <Card className="w-full md:w-1/3 flex flex-col justify-between items-center bg-white/20 backdrop-blur-md shadow-xl">
                     <CardContent className="flex flex-row items-center gap-4">
                         <div>
-                            <img src="icon/tonnerre.svg" alt="rapide" />
+                            <Image src="/icon/tonnerre.svg" alt="rapide" width={24} height={24} />
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Rapidité</h3>  
@@ -113,7 +114,7 @@ export default function Page() {
                 <Card className="w-full md:w-1/3 flex flex-col justify-between items-center bg-white/20 backdrop-blur-md shadow-xl">
                     <CardContent className="flex flex-row items-center gap-4">
                         <div>
-                            <img src="icon/rappel.svg" alt="rappel"/>
+                            <Image src="/icon/rappel.svg" alt="rappel" width={24} height={24} />
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Rappels fiables</h3>  
@@ -129,7 +130,7 @@ export default function Page() {
             <section id="about">
                 <div className="flex flex-col md:flex-row my-[10%] gap-10 md:gap-20">
                     <div className="w-full md:w-1/3">
-                        <img src="img/oublie.png" alt="medicament" className="h-full w-full object-cover"/>
+                        <Image src="/img/oublie.png" alt="medicament" className="h-full w-full object-cover" width={300} height={300} />
                     </div>
                     <div className="w-full md:w-2/3 flex flex-col">
                         <h2 className="text-2xl md:text-4xl font-bold">Ne ratez plus jamais un médicament.</h2>
@@ -151,7 +152,7 @@ export default function Page() {
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
                             <div className="flex justify-center items-center">
-                                <img src="img/medic.png" alt="medicaments" />
+                                <Image src="/img/medic.png" alt="medicaments" width={200} height={100} />
                             </div>
                             <h5>Ajout & gestion des médicaments</h5>
                             <p className="text-sm">Ajoutez un traitement en quelques secondes, choisissez l&apos;heure de prise et laissez l&apos;application s&apos;en charger. Simple, rapide et efficace.</p>
@@ -160,7 +161,7 @@ export default function Page() {
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
                             <div className="flex justify-center items-center">
-                                <img src="img/push.png" alt="push" />
+                                <Image src="/img/push.png" alt="push" width={200} height={100} />
                             </div>
                             <h5>Rappels & notifications</h5>
                             <p className="text-sm">Recevez une alerte au bon moment. Plus besoin d&apos;y penser, Prise Médoc vous le rappelle.</p>
@@ -169,7 +170,7 @@ export default function Page() {
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
                             <div className="flex justify-center items-center">
-                                <img src="img/checklist.png" alt="checklist" />
+                                <Image src="/img/checklist.png" alt="checklist" width={200} height={100} />
                             </div>
                             <h5>Suivi de prise</h5>
                             <p className="text-sm">Un bouton suffit pour marquer un médicament comme &quot;pris&quot; ou &quot;oublié&quot;. Le statut s&apos;affiche pour mieux suivre la journée.</p>
@@ -178,7 +179,7 @@ export default function Page() {
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
                             <div className="flex justify-center items-center">
-                                <img src="img/solidarity.png" alt="check" />
+                                <Image src="/img/solidarity.png" alt="check" width={200} height={100} />
                             </div>
                             <h5>Adaptée à tous</h5>
                             <p className="text-sm">Pensée pour les proches, les familles, les personnes âgées : une interface claire, lisible et accessible à tous.</p>
