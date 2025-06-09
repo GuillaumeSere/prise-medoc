@@ -2,7 +2,7 @@
 
 import { auth, db } from "../../../src/lib/firebase";
 import { collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
     AlertDialog,
@@ -19,7 +19,7 @@ import { Card, CardHeader } from "../../../src/components/ui/card";
 import useCurrentUser from "../../../src/hook/user_verif";
 import Image from "next/image";
 
-export default function MedicamentForm() {
+function MedicamentFormContent() {
   const { user, loading } = useCurrentUser(); 
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
@@ -158,5 +158,13 @@ export default function MedicamentForm() {
         </AlertDialog>
       </Card> 
     </div>
+  );
+}
+
+export default function MedicamentForm() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <MedicamentFormContent />
+    </Suspense>
   );
 }
