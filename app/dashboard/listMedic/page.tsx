@@ -7,6 +7,7 @@ import { Param } from "../../../src/components/button_param";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "../../../src/hook/user_verif";
+import Image from 'next/image'; 
 
 interface Medicament {
     id: string;
@@ -72,9 +73,12 @@ export default function ListMedic() {
                             <button className="cursor-pointer"
                                 onClick={() => router.push("add_medicament")}
                             >
-                                <img
+                                <Image
                                     src="../icon/ajouter-un-bouton.png"
                                     alt="plus"
+                                    layout="fixed"
+                                    width={28}
+                                    height={28}
                                     className="w-7 h-7 transition-transform duration-200 ease-in-out hover:scale-110"
                                 />
                             </button>
