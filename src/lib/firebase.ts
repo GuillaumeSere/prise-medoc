@@ -3,12 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAIc3uyyoyeLCenPyPcEP26D3LfB0IWWAc",
-  authDomain: "rappelle-moi-c17e6.firebaseapp.com",
-  projectId: "rappelle-moi-c17e6",
-  storageBucket: "rappelle-moi-c17e6.firebasestorage.app",
-  messagingSenderId: "942639587881",
-  appId: "1:942639587881:web:5a6baf25404404a87f3238"
+  apiKey: "AIzaSyCQIG4VXmqiYVXqlif1rf5QxpEBt6Y9o4I", 
+  authDomain: "prise-medoc.firebaseapp.com",
+  projectId: "prise-medoc",
+  storageBucket: "prise-medoc.firebasestorage.app",
+  messagingSenderId: "2555944769",
+  appId: "1:2555944769:web:d839cea57cacc6c53b8bc0",
+   measurementId: "G-DSEGPZ4GFN"
 };
 
 // Initialiser Firebase une seule fois
