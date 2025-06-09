@@ -61,7 +61,7 @@ const activeIndex = hovered ?? iconpath.findIndex((item) =>
 
   return (
     <div className="flex flex-col justify-between h-full relative z-[100] pr-4 sm:pr-[40px]">
-      <Card className="rounded-full card bg-white/25 backdrop-blur-md shadow-xl w-16 sm:w-25 relative z-[100]">
+      <Card className="rounded-full card bg-white/25 backdrop-blur-md shadow-xl w-16 sm:w-25">
         <div className="relative responsive px-2 sm:px-5 py-2 sm:py-4">
           {/* fond bleu dynamique */}
           <motion.div

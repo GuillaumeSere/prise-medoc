@@ -79,7 +79,7 @@ export default function Page() {
                 </p>
 
                 <div className="flex flex-col md:flex-row gap-4 mt-10">
-                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>C'est partie !</Button>
+                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>C&apos;est partie !</Button>
                     <Button variant="default" size="default" className="bg-white text-black shadow-sm hover:text-white cursor-pointer" onClick={() => router.push("#about")}>
                     Comment ça marche ?
                     </Button>
@@ -140,7 +140,7 @@ export default function Page() {
                             Créer une app accessible, douce, utile, qui ne complique pas les choses mais qui les rend plus faciles. 
                             Parce qu'un simple rappel au bon moment, ça peut vraiment faire la différence.
                         </p>
-                        <Button variant="default" size="default" className="w-fit self-start bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={()=> router.push("/dashboard")}>C'est partie !</Button>
+                        <Button variant="default" size="default" className="w-fit self-start bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={()=> router.push("/dashboard")}>C&apos;est partie !</Button>
                     </div>
                 </div>
             </section>
