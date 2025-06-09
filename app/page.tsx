@@ -135,7 +135,7 @@ export default function Page() {
                         <h2 className="text-2xl md:text-4xl font-bold">Ne ratez plus jamais un médicament.</h2>
                         <p className="my-4 text-base md:text-lg">
                             Tout a commencé avec ma mère, qui oubliait souvent de prendre ses médicaments.Rien de grave… sauf quand ça devient quotidien. 
-                            Il fallait lui rappeler,et souvent vérifier. Et je me suis dit : "Pourquoi ne pas créer une application simple, faite pour elle ?"
+                            Il fallait lui rappeler,et souvent vérifier. Et je me suis dit : Pourquoi ne pas créer une application simple, faite pour elle ?
                             Prise Médoc est né de là.
                             Créer une app accessible, douce, utile, qui ne complique pas les choses mais qui les rend plus faciles. 
                             Parce qu&apos;un simple rappel au bon moment, ça peut vraiment faire la différence.
@@ -172,7 +172,7 @@ export default function Page() {
                                 <img src="img/checklist.png" alt="checklist" />
                             </div>
                             <h5>Suivi de prise</h5>
-                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme "pris" ou "oublié". Le statut s&apos;affiche pour mieux suivre la journée.</p>
+                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme &quot;pris&quot; ou &quot;oublié&quot;. Le statut s&apos;affiche pour mieux suivre la journée.</p>
                         </CardContent>
                     </Card>
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">

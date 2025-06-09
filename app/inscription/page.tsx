@@ -74,7 +74,7 @@ export default function Inscription() {
               <div className="flex flex-col gap-2">
                 <h4 className="text-xl">Accède à tes informations personnelles</h4>
                 <p className="text-sm text-gray-600">
-                  Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd’hui et gérer tes rappels.              
+                  Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd'hui et gérer tes rappels.              
                 </p>
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function Inscription() {
               <div className="flex flex-col gap-2">
                 <h4 className="text-xl">Un espace sécurisé rien que pour toi</h4>
                 <p className="text-sm text-gray-600">
-                  Ton espace est personnel et protégé. Reprends là où tu t’étais arrêté, en toute tranquillité.
+                  Ton espace est personnel et protégé. Reprends là où tu t&apos;étais arrêté, en toute tranquillité.
                 </p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export default function Inscription() {
       </div>
 
       <div className="w-1/2 min-h-[400px] bg-white p-[5%] shadow-xl rounded-2xl flex flex-col items-center justify-center relative z-10">
-        <h2 className="text-3xl font-bold ">S'inscrire</h2>
+        <h2 className="text-3xl font-bold ">S&apos;inscrire</h2>
         <p className="text-gray-600 text-sm mb-6"> Vous avez déjà un compte ?{" "}
           <span 
           className="text-blue-600 cursor-pointer hover:underline"
@@ -134,8 +134,11 @@ export default function Inscription() {
           </button>
 
           <div className="border-t border-gray-300 my-4"></div>
-          <Button className="bg-white text-blac border border-gray-600 w-full justify-center hover:bg-gray-100 cursor-pointer"
-          onClick={connexionGoogle}>
+          <Button 
+            variant="outline"
+            size="default"
+            className="bg-white text-blac border border-gray-600 w-full justify-center hover:bg-gray-100 cursor-pointer"
+            onClick={connexionGoogle}>
             <img src="icon/google-logo.png" alt="google"
             className="w-5 h-5 "/>
             Google
