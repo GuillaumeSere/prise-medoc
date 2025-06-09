@@ -117,7 +117,7 @@ export default function Page() {
                         </div>
                         <div>
                             <h3 className="text-xl font-bold">Rappels fiables</h3>  
-                            <p className="text-sm">Recevez vos rappels à l'heure prévue. Plus besoin de se poser de question.</p>
+                            <p className="text-sm">Recevez vos rappels à l&apos;heure prévue. Plus besoin de se poser de question.</p>
                         </div>
                     </CardContent>          
                 </Card>   
@@ -138,7 +138,7 @@ export default function Page() {
                             Il fallait lui rappeler,et souvent vérifier. Et je me suis dit : "Pourquoi ne pas créer une application simple, faite pour elle ?"
                             Prise Médoc est né de là.
                             Créer une app accessible, douce, utile, qui ne complique pas les choses mais qui les rend plus faciles. 
-                            Parce qu'un simple rappel au bon moment, ça peut vraiment faire la différence.
+                            Parce qu&apos;un simple rappel au bon moment, ça peut vraiment faire la différence.
                         </p>
                         <Button variant="default" size="default" className="w-fit self-start bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={()=> router.push("/dashboard")}>C&apos;est partie !</Button>
                     </div>
@@ -147,14 +147,14 @@ export default function Page() {
 
             {/* fonctionnalité */}
             <Card className="bg-gradient-to-b from-[#88C8FF] to-[#ffffff] my-[5%]" id="features">
-                <CardContent className="flex flex-col md:flex-row justify-between items-center gap-4 items-stretch">
+                <CardContent className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
                         <CardContent className="flex flex-col gap-4 flex-1 justify-end">
                             <div className="flex justify-center items-center">
                                 <img src="img/medic.png" alt="medicaments" />
                             </div>
                             <h5>Ajout & gestion des médicaments</h5>
-                            <p className="text-sm">Ajoutez un traitement en quelques secondes, choisissez l'heure de prise et laissez l'application s'en charger. Simple, rapide et efficace.</p>
+                            <p className="text-sm">Ajoutez un traitement en quelques secondes, choisissez l&apos;heure de prise et laissez l&apos;application s&apos;en charger. Simple, rapide et efficace.</p>
                         </CardContent>
                     </Card>
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
@@ -163,7 +163,7 @@ export default function Page() {
                                 <img src="img/push.png" alt="push" />
                             </div>
                             <h5>Rappels & notifications</h5>
-                            <p className="text-sm">Recevez une alerte au bon moment. Plus besoin d'y penser, Prise Médoc vous le rappelle.</p>
+                            <p className="text-sm">Recevez une alerte au bon moment. Plus besoin d&apos;y penser, Prise Médoc vous le rappelle.</p>
                         </CardContent>
                     </Card>
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
@@ -172,7 +172,7 @@ export default function Page() {
                                 <img src="img/checklist.png" alt="checklist" />
                             </div>
                             <h5>Suivi de prise</h5>
-                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme "pris" ou "oublié". Le statut s'affiche pour mieux suivre la journée.</p>
+                            <p className="text-sm">Un bouton suffit pour marquer un médicament comme "pris" ou "oublié". Le statut s&apos;affiche pour mieux suivre la journée.</p>
                         </CardContent>
                     </Card>
                     <Card className="w-full md:w-1/4 flex flex-col bg-white/20 backdrop-blur-md shadow-xl min-h-[350px]">
@@ -203,7 +203,7 @@ export default function Page() {
                     <Card className="bg-gradient-to-b from-[#88C8FF] to-[#ffffff]">
                         <CardContent className="flex flex-col gap-4 m-4 md:m-10">
                             <h5>Restons en contact</h5>
-                            <p className="text-sm">Vous pouvez aussi m'écrire directement via le formulaire de contact. Je vous répondrai dès que possible.</p>
+                            <p className="text-sm">Vous pouvez aussi m&apos;écrire directement via le formulaire de contact. Je vous répondrai dès que possible.</p>
                             <form className="flex flex-col gap-4">
                                 <input type="text" placeholder="Nom" className="border-b border-black p-2" />
                                 <input type="email" placeholder="Email" className="border-b border-black p-2" />
