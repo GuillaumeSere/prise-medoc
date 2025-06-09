@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { Card } from "./ui/card";
 import { useState } from "react";
+import Image from 'next/image'; 
 
 export default function Deconnexion() {
     const router = useRouter();
@@ -30,9 +31,12 @@ export default function Deconnexion() {
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
             >
-                <img
+                <Image
                     src="/icon/menu/deconnexion.png"
                     alt="Icon deconnexion"
+                    layout="fixed"
+                    width={24}
+                    height={24}
                     className="w-6 h-6 object-contain"
                 />
             </Card>

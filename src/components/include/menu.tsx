@@ -5,6 +5,7 @@ import { Card } from "../ui/card";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Deconnexion from "../deconnexion";
+import Image from 'next/image'; // Importation du composant Image de Next
 
 const iconpath = [
   { src: "/icon/menu/accueil_black.png", path: "/dashboard", label: "Accueil" },
@@ -86,13 +87,16 @@ const activeIndex = hovered ?? iconpath.findIndex((item) =>
               onClick={() => fnClick(index)}
               className="relative icon z-[100] h-12 sm:h-16 flex justify-center items-center cursor-pointer"
             >
-              <img
+              <Image
                 src={
                   index === activeIndex
                     ? iconpath_white[index].src
                     : iconpath[index].src
                 }
                 alt={`Icon ${index}`}
+                layout="fixed"
+                width={24}
+                height={24}
                 className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
               />
               {hovered === index && (

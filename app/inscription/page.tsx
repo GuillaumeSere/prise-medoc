@@ -50,7 +50,7 @@ export default function Inscription() {
 
   return (
     <div
-      className="rounded-2xl m-5 flex flex-row relative overflow-hidden gap-70 py-[3%] px-[5%] relative z-10"
+      className="rounded-2xl m-5 flex flex-row overflow-hidden gap-70 py-[3%] px-[5%] relative z-10"
       style={{
         height: "calc(100vh - 2.5rem)", 
         boxShadow: "0 12px 24px rgba(0, 0, 0, 0.15)",
@@ -75,7 +75,7 @@ export default function Inscription() {
               <div className="flex flex-col gap-2">
                 <h4 className="text-xl">Accède à tes informations personnelles</h4>
                 <p className="text-sm text-gray-600">
-                  Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd'hui et gérer tes rappels.              
+                  Connecte-toi pour accéder à ta liste de médicaments, voir ceux que tu as pris aujourd&apos;hui et gérer tes rappels.              
                 </p>
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function Inscription() {
             className="p-3 border rounded-xl w-full"
           />
           <button type="submit" className="p-3 bg-blue-600 text-white rounded-xl w-full">
-            S'inscrire
+            S&apos;inscrire
           </button>
 
           <div className="border-t border-gray-300 my-4"></div>
