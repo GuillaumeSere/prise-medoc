@@ -7,7 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import Image from "next/image";
 
 interface ParamProps {
   onModif: (id: string) => void;
@@ -20,13 +19,22 @@ export function Param({ onModif, onDelete, id }: ParamProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="cursor-pointer p-2 hover:bg-gray-100 rounded-full transition-colors">
-          <Image 
-            src="/icon/param.png" 
-            alt="Paramètres" 
-            width={24} 
-            height={24}
-            className="hover:opacity-80 transition-opacity"
-          />
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="text-gray-600 hover:opacity-80 transition-opacity"
+          >
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="19" cy="12" r="1" />
+            <circle cx="5" cy="12" r="1" />
+          </svg>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-white shadow-lg rounded-lg">
