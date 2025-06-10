@@ -7,7 +7,8 @@ import { Param } from "../../../src/components/button_param";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "../../../src/hook/user_verif";
-import Image from 'next/image'; 
+import Image from 'next/image';
+import { toast } from "sonner";
 
 interface Medicament {
     id: string;
@@ -22,13 +23,15 @@ export default function ListMedic() {
     const [medicaments, setMedicaments] = useState<Medicament[]>([]);
 
     // fonction pour supprimer un médicament
-    const supprimerMedicament = async (id) => {
+    const supprimerMedicament = async (id: string) => {
         try {
-            const medicamentDoc = doc(db, "medicaments", id); // on crée une référence au document à supprimer
-            await deleteDoc(medicamentDoc); // on supprime le document
-            setMedicaments(medicaments.filter((medicament) => medicament.id !== id)); // on met à jour l'état pour retirer le médicament supprimé
+            const medicamentDoc = doc(db, "medicaments", id);
+            await deleteDoc(medicamentDoc);
+            setMedicaments(medicaments.filter((medicament) => medicament.id !== id));
+            toast.success("Médicament supprimé avec succès");
         } catch (error) {
             console.error("Erreur lors de la suppression du médicament :", error);
+            toast.error("Erreur lors de la suppression du médicament");
         }
     };
     // fonction pour modifier un médicament
@@ -53,7 +56,7 @@ export default function ListMedic() {
             }
         };
         fetchMedicaments();  // on appelle la fonction pour récupérer les médicaments
-    }, [user, loading]); //l'effet ne s'exécute qu'une seule fois au chargement
+    }, [user, loading]); 
 
 
     
@@ -96,7 +99,11 @@ export default function ListMedic() {
                                     </CardContent>
                                 </div>
                                 <div className="flex gap-2">
-                                    <Param onModif={modificationMedicament} onDelete={supprimerMedicament} id={medicament.id} />
+                                    <Param 
+                                        onModif={modificationMedicament} 
+                                        onDelete={supprimerMedicament} 
+                                        id={medicament.id} 
+                                    />
                                 </div>
                             </Card>
                         ))}
