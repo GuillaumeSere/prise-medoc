@@ -1,7 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 declare interface nextConfigType {
-	static experimental: any;
+	static swcMinify: {	};
 
-	static optimizeCss: any;
+	static optimizeCss: {	};
 }
