@@ -25,12 +25,15 @@ export default function ListMedic() {
     // fonction pour supprimer un médicament
     const supprimerMedicament = async (id: string) => {
         try {
+            console.log("Tentative de suppression du médicament:", id);
             const medicamentDoc = doc(db, "medicaments", id);
+            console.log("Référence du document créée");
             await deleteDoc(medicamentDoc);
+            console.log("Document supprimé avec succès");
             setMedicaments(medicaments.filter((medicament) => medicament.id !== id));
             toast.success("Médicament supprimé avec succès");
         } catch (error) {
-            console.error("Erreur lors de la suppression du médicament :", error);
+            console.error("Erreur détaillée lors de la suppression du médicament :", error);
             toast.error("Erreur lors de la suppression du médicament");
         }
     };
