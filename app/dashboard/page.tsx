@@ -7,6 +7,7 @@ import { collection, getDocs, doc, updateDoc, query, where } from "firebase/fire
 import { db } from "../../src/lib/firebase";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "../../src/hook/user_verif";
+import { checkMedicamentsNotifications } from "./notif_param/notificationService";
 
 export default function Dashboard() {
     const { user, loading } = useCurrentUser(); // on utilise le hook pour vérifier si l'utilisateur est connecté
@@ -19,7 +20,25 @@ export default function Dashboard() {
         }
     }, [user, loading, router]);
 
-       useEffect(() => {
+    // Vérifier les notifications toutes les minutes
+    useEffect(() => {
+        if (!user) return;
+
+        const checkNotifications = async () => {
+            await checkMedicamentsNotifications(user.uid);
+        };
+
+        // Vérifier immédiatement au chargement
+        checkNotifications();
+
+        // Configurer l'intervalle de vérification (toutes les minutes)
+        const interval = setInterval(checkNotifications, 60000);
+
+        // Nettoyer l'intervalle lors du démontage du composant
+        return () => clearInterval(interval);
+    }, [user]);
+
+    useEffect(() => {
         const fetchMedicaments = async () => {
             if (!user) return;
             try {
@@ -81,7 +100,7 @@ export default function Dashboard() {
 
                     <Card className="w-1/2 flex flex-col justify-between p-4 bg-white/25 backdrop-blur-md shadow-xl">
                         <CardContent className="">
-                            <h4 className="text-4xl sm:text-7xl">0{medicaments.length}</h4>
+                            <h4 className="text-4xl sm:text-7xl">0{medicaments.filter(medicament => !medicament.pris).length}</h4>
                         </CardContent>
                         <CardFooter className="">
                             <p className="text-sm sm:text-base font-medium">A prendre</p>

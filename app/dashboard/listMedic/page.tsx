@@ -62,8 +62,6 @@ export default function ListMedic() {
     }, [user, loading]); 
 
 
-    
-
     return (
         <div className="flex flex-col w-full">
             <h3 className="text-4xl mb-[2%] relative z-10">
