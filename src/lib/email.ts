@@ -1,5 +1,9 @@
 import { Resend } from 'resend';
 
+if (!process.env.RESEND_API_KEY) {
+    throw new Error('La clé API Resend n&apos;est pas configurée. Veuillez ajouter RESEND_API_KEY dans votre fichier .env.local');
+}
+
 // Initialiser Resend avec la clé API
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,14 +25,14 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
         });
 
         if (error) {
-            console.error('Erreur lors de l\'envoi de l\'email:', error);
+            console.error('Erreur lors de l&apos;envoi de l&apos;email:', error);
             return false;
         }
 
         console.log('Email envoyé avec succès:', data);
         return true;
     } catch (error) {
-        console.error('Erreur lors de l\'envoi de l\'email:', error);
+        console.error('Erreur lors de l&apos;envoi de l&apos;email:', error);
         return false;
     }
 };
@@ -36,7 +40,7 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
 // Template pour les notifications de rappel de médicaments
 export const sendMedicationReminder = async (userEmail: string, medicationName: string, time: string) => {
     const subject = `Rappel de prise de médicament : ${medicationName}`;
-    const text = `Bonjour,\n\nC'est l'heure de prendre votre médicament : ${medicationName}.\nHeure prévue : ${time}\n\nCordialement,\nL'équipe Prise-Medoc`;
+    const text = `Bonjour,\n\nC&apos;est l&apos;heure de prendre votre médicament : ${medicationName}.\nHeure prévue : ${time}\n\nCordialement,\nL&apos;équipe Prise-Medoc`;
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <div style="text-align: center; margin-bottom: 20px;">
