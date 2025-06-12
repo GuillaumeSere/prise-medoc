@@ -17,7 +17,7 @@ interface EmailOptions {
 export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Prise-Medoc <onboarding@resend.dev>',
+            from: 'Guillaume Sere <guillaumesere@hotmail.fr>', // Utilisation de l'email vérifié
             to: [to],
             subject,
             text,

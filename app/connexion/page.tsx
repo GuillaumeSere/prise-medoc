@@ -49,7 +49,7 @@ export default function Connexion() {
 
     return (
         <div
-            className="rounded-2xl m-2 md:m-5 flex flex-col md:flex-row relative overflow-hidden gap-4 md:gap-70 py-[3%] px-[5%] relative z-10"
+            className="rounded-2xl m-2 md:m-5 flex flex-col md:flex-row relative overflow-hidden gap-4 md:gap-70 py-[3%] px-[5%] z-10"
             style={{
                 minHeight: "calc(100vh - 2.5rem)",
                 boxShadow: "0 12px 24px rgba(0, 0, 0, 0.15)",

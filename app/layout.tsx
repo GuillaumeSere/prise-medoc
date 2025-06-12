@@ -1,22 +1,27 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ClientLayout from "./ClientLayout";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
 });
 
 export const metadata = {
-  title: "Prise Médoc",
-  description: "rappel de prise de médicaments avec système de notification pour ne plus jamais oublier ses médicaments",
+  title: "Prise-Medoc",
+  description: "Application de suivi de prise de médicaments",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fr">
-      <body className={`${inter.variable} antialiased`}>
-        {children}
-        {/* <MenuBar /> */}
+      <body className={inter.className}>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );
