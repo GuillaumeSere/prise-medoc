@@ -82,10 +82,10 @@ export default function NotifParam() {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 relative z-10">
             <h1 className="text-2xl font-bold mb-6">Paramètres des notifications</h1>
             
-            <Card className="w-full max-w-md mx-auto">
+            <Card className="w-full max-w-md mx-auto relative">
                 <CardHeader className="p-6">
                     <h2 className="text-xl font-semibold">Notifications de rappel</h2>
                 </CardHeader>
