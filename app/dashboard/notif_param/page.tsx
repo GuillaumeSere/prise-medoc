@@ -83,12 +83,12 @@ export default function NotifParam() {
                                         });
                                     }
                                 } catch (error) {
-                                    console.error("Erreur lors de l'affichage de la notification :", error);
+                                    console.error("Erreur lors de l&apos;affichage de la notification :", error);
                                 }
                             });
                         }
                     } catch (error) {
-                        console.error("Erreur lors de l'obtention du token FCM:", error);
+                        console.error("Erreur lors de l&apos;obtention du token FCM:", error);
                         // Réessayer l'initialisation après un délai
                         setTimeout(() => {
                             initializeNotifications();
@@ -96,7 +96,7 @@ export default function NotifParam() {
                     }
                 }
             } catch (error) {
-                console.error("Erreur lors de l'initialisation des notifications :", error);
+                console.error("Erreur lors de l&apos;initialisation des notifications :", error);
             }
         };
 
@@ -109,7 +109,7 @@ export default function NotifParam() {
                 console.log("Nettoyage des notifications");
             }
         };
-    }, []);
+    }, [fcmToken]);
 
     const handleNotificationToggle = async () => {
         try {
@@ -136,7 +136,7 @@ export default function NotifParam() {
 
     const handleEmailToggle = async () => {
         if (!emailNotificationsEnabled && !email) {
-            alert("Veuillez d'abord entrer une adresse email valide");
+            alert("Veuillez d&apos;abord entrer une adresse email valide");
             return;
         }
         setEmailNotificationsEnabled(!emailNotificationsEnabled);
@@ -167,11 +167,11 @@ export default function NotifParam() {
             if (response.ok) {
                 alert("Email de test envoyé avec succès !");
             } else {
-                throw new Error(data.error || "Erreur lors de l'envoi de l'email");
+                throw new Error(data.error || "Erreur lors de l&apos;envoi de l&apos;email");
             }
         } catch (error) {
             console.error("Erreur lors de la sauvegarde des paramètres :", error);
-            alert("Erreur lors de l'envoi de l'email de test");
+            alert("Erreur lors de l&apos;envoi de l&apos;email de test");
         } finally {
             setIsSaving(false);
         }
@@ -259,7 +259,7 @@ export default function NotifParam() {
                             {emailNotificationsEnabled && (
                                 <div className="mt-4 p-4 bg-green-50 rounded-md">
                                     <p className="text-sm text-green-700">
-                                        Vous recevrez des rappels par email à l'adresse spécifiée.
+                                        Vous recevrez des rappels par email à l&apos;adresse spécifiée.
                                     </p>
                                 </div>
                             )}
