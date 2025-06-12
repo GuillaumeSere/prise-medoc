@@ -67,6 +67,11 @@ export default function Page() {
             <div className="absolute bottom-15 -right-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
             <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-15 z-0 transform "></div>
 
+            <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-70 z-0 transform scale-x-150"></div>
+            <div className="absolute top-15 -left-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
+            <div className="absolute top-15 -right-10 w-96 h-96 bg-[#77FFB2] rounded-full blur-3xl opacity-70 z-0"></div>
+            <div className="absolute top-0 left-0 w-full h-64 bg-[#88CDFF] rounded-full blur-3xl opacity-15 z-0 transform "></div>
+
             {/* navbar HERE */}
             <nav className="flex justify-between items-center py-4 px-4 md:px-10 relative z-50">
                 <h1 className="text-xl md:text-2xl font-bold">Prise Médoc.</h1>
@@ -123,7 +128,7 @@ export default function Page() {
                 </p>
 
                 <div className="flex flex-col md:flex-row gap-4 mt-10">
-                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>C&apos;est partie !</Button>
+                    <Button variant="default" size="default" className="bg-[#47f894] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>C&apos;est partie !</Button>
                     <Button variant="default" size="default" className="bg-white text-black shadow-sm hover:text-white cursor-pointer" onClick={() => router.push("#about")}>
                     Comment ça marche ?
                     </Button>

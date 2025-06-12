@@ -21,6 +21,12 @@ export default function NotifParam() {
                     return;
                 }
 
+                // Vérifier si le service worker est disponible
+                if (!('serviceWorker' in navigator)) {
+                    console.log("Ce navigateur ne supporte pas les service workers");
+                    return;
+                }
+
                 // Vérifier la permission actuelle
                 const permission = Notification.permission;
                 setNotificationsEnabled(permission === "granted");
@@ -36,19 +42,24 @@ export default function NotifParam() {
 
                 // Obtenir le token FCM
                 if (permission === "granted") {
-                    const token = await getToken(messaging, {
-                        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
-                    });
-                    setFcmToken(token);
-                    
-                    // Écouter les messages en arrière-plan
-                    onMessage(messaging, (payload) => {
-                        console.log("Message reçu :", payload);
-                        new Notification(payload.notification?.title || "Nouvelle notification", {
-                            body: payload.notification?.body,
-                            icon: "/icon/notification.png"
+                    try {
+                        const token = await getToken(messaging, {
+                            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+                            serviceWorkerRegistration: await navigator.serviceWorker.register('/firebase-messaging-sw.js')
                         });
-                    });
+                        setFcmToken(token);
+                        
+                        // Écouter les messages en arrière-plan
+                        onMessage(messaging, (payload) => {
+                            console.log("Message reçu :", payload);
+                            new Notification(payload.notification?.title || "Nouvelle notification", {
+                                body: payload.notification?.body,
+                                icon: "/icon/notification.png"
+                            });
+                        });
+                    } catch (error) {
+                        console.error("Erreur lors de l'obtention du token FCM:", error);
+                    }
                 }
             } catch (error) {
                 console.error("Erreur lors de l'initialisation des notifications :", error);
