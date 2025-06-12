@@ -6,11 +6,24 @@ import { Label } from "../../../src/components/ui/label";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { app } from "../../../src/lib/firebase";
 import useCurrentUser from "../../../src/hook/user_verif";
+import { Input } from "../../../src/components/ui/input";
+import { Button } from "../../../src/components/ui/button";
+import { sendMedicationReminder } from "../../../src/lib/email";
 
 export default function NotifParam() {
     const { user } = useCurrentUser();
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+    const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(false);
+    const [email, setEmail] = useState("");
     const [fcmToken, setFcmToken] = useState<string | null>(null);
+    const [isSaving, setIsSaving] = useState(false);
+
+    useEffect(() => {
+        // Initialiser l'email depuis le profil utilisateur si disponible
+        if (user?.email) {
+            setEmail(user.email);
+        }
+    }, [user]);
 
     useEffect(() => {
         const initializeNotifications = async () => {
@@ -121,43 +134,139 @@ export default function NotifParam() {
         }
     };
 
+    const handleEmailToggle = async () => {
+        if (!emailNotificationsEnabled && !email) {
+            alert("Veuillez d'abord entrer une adresse email valide");
+            return;
+        }
+        setEmailNotificationsEnabled(!emailNotificationsEnabled);
+    };
+
+    const handleSaveEmail = async () => {
+        if (!email) {
+            alert("Veuillez entrer une adresse email valide");
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    medicationName: "Test de notification",
+                    time: new Date().toLocaleTimeString()
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Email de test envoyé avec succès !");
+            } else {
+                throw new Error(data.error || "Erreur lors de l'envoi de l'email");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la sauvegarde des paramètres :", error);
+            alert("Erreur lors de l'envoi de l'email de test");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     return (
         <div className="container mx-auto p-4 relative z-10">
             <h1 className="text-2xl font-bold mb-6">Paramètres des notifications</h1>
             
-            <Card className="w-full max-w-md mx-auto relative">
-                <CardHeader className="p-6">
-                    <h2 className="text-xl font-semibold">Notifications de rappel</h2>
-                </CardHeader>
-                <CardContent className="p-6">
-                    <div className="flex items-center justify-between space-x-2">
-                        <Label htmlFor="notifications" className="flex-1">
-                            Activer les notifications de rappel
-                        </Label>
-                        <Switch
-                            id="notifications"
-                            checked={notificationsEnabled}
-                            onCheckedChange={handleNotificationToggle}
-                        />
-                    </div>
-                    
-                    {notificationsEnabled && (
-                        <div className="mt-4 p-4 bg-green-50 rounded-md">
-                            <p className="text-sm text-green-700">
-                                Les notifications sont activées. Vous recevrez des rappels pour vos médicaments.
-                            </p>
+            <div className="space-y-6">
+                <Card className="w-full max-w-md mx-auto">
+                    <CardHeader className="p-6">
+                        <h2 className="text-xl font-semibold">Notifications de rappel</h2>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between space-x-2 mb-6">
+                            <Label htmlFor="notifications" className="flex-1">
+                                Activer les notifications de rappel
+                            </Label>
+                            <Switch
+                                id="notifications"
+                                checked={notificationsEnabled}
+                                onCheckedChange={handleNotificationToggle}
+                            />
                         </div>
-                    )}
-                    
-                    {!notificationsEnabled && (
-                        <div className="mt-4 p-4 bg-yellow-50 rounded-md">
-                            <p className="text-sm text-yellow-700">
-                                Les notifications sont désactivées. Activez-les pour recevoir des rappels.
-                            </p>
+                        
+                        {notificationsEnabled && (
+                            <div className="mt-4 p-4 bg-green-50 rounded-md">
+                                <p className="text-sm text-green-700">
+                                    Les notifications sont activées. Vous recevrez des rappels pour vos médicaments.
+                                </p>
+                            </div>
+                        )}
+                        
+                        {!notificationsEnabled && (
+                            <div className="mt-4 p-4 bg-yellow-50 rounded-md">
+                                <p className="text-sm text-yellow-700">
+                                    Les notifications sont désactivées. Activez-les pour recevoir des rappels.
+                                </p>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                <Card className="w-full max-w-md mx-auto">
+                    <CardHeader className="p-6">
+                        <h2 className="text-xl font-semibold">Notifications par email</h2>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between space-x-2">
+                                <Label htmlFor="email-notifications" className="flex-1">
+                                    Activer les notifications par email
+                                </Label>
+                                <Switch
+                                    id="email-notifications"
+                                    checked={emailNotificationsEnabled}
+                                    onCheckedChange={handleEmailToggle}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Adresse email</Label>
+                                <div className="flex space-x-2">
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="votre@email.com"
+                                        disabled={!emailNotificationsEnabled}
+                                    />
+                                    <Button
+                                        onClick={handleSaveEmail}
+                                        disabled={!emailNotificationsEnabled || isSaving}
+                                        className="bg-blue-600 hover:bg-blue-700"
+                                        variant="default"
+                                        size="default"
+                                    >
+                                        {isSaving ? "Enregistrement..." : "Enregistrer"}
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {emailNotificationsEnabled && (
+                                <div className="mt-4 p-4 bg-green-50 rounded-md">
+                                    <p className="text-sm text-green-700">
+                                        Vous recevrez des rappels par email à l'adresse spécifiée.
+                                    </p>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }
