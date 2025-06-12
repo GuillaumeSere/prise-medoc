@@ -43,22 +43,43 @@ export default function NotifParam() {
                 // Obtenir le token FCM
                 if (permission === "granted") {
                     try {
+                        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
                         const token = await getToken(messaging, {
                             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-                            serviceWorkerRegistration: await navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                            serviceWorkerRegistration: registration
                         });
-                        setFcmToken(token);
                         
-                        // Écouter les messages en arrière-plan
-                        onMessage(messaging, (payload) => {
-                            console.log("Message reçu :", payload);
-                            new Notification(payload.notification?.title || "Nouvelle notification", {
-                                body: payload.notification?.body,
-                                icon: "/icon/notification.png"
+                        if (token) {
+                            setFcmToken(token);
+                            console.log("Token FCM obtenu avec succès");
+                            
+                            // Écouter les messages en arrière-plan
+                            onMessage(messaging, (payload) => {
+                                try {
+                                    console.log("Message reçu :", payload);
+                                    const notificationTitle = payload.notification?.title || "Nouvelle notification";
+                                    const notificationBody = payload.notification?.body || "";
+                                    
+                                    // Vérifier si les notifications sont autorisées
+                                    if (Notification.permission === "granted") {
+                                        new Notification(notificationTitle, {
+                                            body: notificationBody,
+                                            icon: "../../../icon/notification.png",
+                                            badge: "../../../icon/notification.png",
+                                            tag: "prise-medoc-notification"
+                                        });
+                                    }
+                                } catch (error) {
+                                    console.error("Erreur lors de l'affichage de la notification :", error);
+                                }
                             });
-                        });
+                        }
                     } catch (error) {
                         console.error("Erreur lors de l'obtention du token FCM:", error);
+                        // Réessayer l'initialisation après un délai
+                        setTimeout(() => {
+                            initializeNotifications();
+                        }, 5000);
                     }
                 }
             } catch (error) {
@@ -67,6 +88,14 @@ export default function NotifParam() {
         };
 
         initializeNotifications();
+
+        // Nettoyage lors du démontage du composant
+        return () => {
+            if (fcmToken) {
+                // Vous pouvez ajouter ici la logique pour supprimer le token si nécessaire
+                console.log("Nettoyage des notifications");
+            }
+        };
     }, []);
 
     const handleNotificationToggle = async () => {

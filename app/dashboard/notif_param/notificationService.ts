@@ -63,7 +63,7 @@ const sendNotification = async (medicament: Medicament) => {
         // Créer et envoyer la notification
         const notification = new Notification("Rappel de médicament", {
             body: `Il est l'heure de prendre votre médicament : ${medicament.nom}`,
-            icon: "/icon/notification.png",
+            icon: "../../../icon/notification.png",
             tag: medicament.id,
             requireInteraction: true
         });
