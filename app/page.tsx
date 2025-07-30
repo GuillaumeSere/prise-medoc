@@ -115,7 +115,7 @@ export default function Page() {
                 </div>
 
                 <div className="hidden md:flex gap-4">
-                    <Button variant="default" size="default" className="bg-[#77FFB2] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>Se connecter</Button>
+                    <Button variant="default" size="default" className="bg-[#47f894] text-black hover:text-white cursor-pointer" onClick={() => router.push("/dashboard")}>Se connecter</Button>
                 </div>
             </nav>
 

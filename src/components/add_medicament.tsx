@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { auth, db } from "../lib/firebase";
-import { collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { Button } from "./ui/button";
 import { Card, CardHeader } from "./ui/card";
 import {
@@ -50,6 +50,7 @@ export default function AddMedicament() {
       await updateDoc(medicamentRef, {
         nom: name,
         heure: time,
+        lastUpdated: Timestamp.now(),
       }).then(() => {
         setIsModalOpen(true);
         setName("");
@@ -61,6 +62,7 @@ export default function AddMedicament() {
         heure: time,
         pris: false,
         uid: user.uid,
+        lastUpdated: Timestamp.now(),
       })
         .then(() => {
           setIsModalOpen(true);

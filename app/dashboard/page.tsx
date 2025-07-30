@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "../../src/components/ui/card";
 import Image from "next/image";
 
-import { collection, getDocs, doc, updateDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, query, where, Timestamp  } from "firebase/firestore";
 import { db } from "../../src/lib/firebase";
 import { useRouter } from "next/navigation";
 import useCurrentUser from "../../src/hook/user_verif";
@@ -13,6 +13,17 @@ export default function Dashboard() {
     const { user, loading } = useCurrentUser(); // on utilise le hook pour vérifier si l'utilisateur est connecté
     const [medicaments, setMedicaments] = useState([]);
     const router = useRouter();
+
+    // Fonction pour vérifier si une date est différente d'aujourd'hui
+    const isDateBeforeToday = (date) => {
+        const today = new Date();
+        const d = date.toDate();
+        return (
+            d.getDate() !== today.getDate() ||
+            d.getMonth() !== today.getMonth() ||
+            d.getFullYear() !== today.getFullYear()
+        );
+    };
 
     useEffect(() => {
         if (!loading && !user) {
@@ -40,22 +51,38 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchMedicaments = async () => {
-            if (!user) return;
-            try {
-                const q = query(collection(db, "medicaments"), where("uid", "==", user.uid)); // on récupère les médicaments de l'utilisateur connecté grc à id
-                const querySnapshot = await getDocs(q);
-                const medicamentsData = querySnapshot.docs.map((doc) => ({
-                    id: doc.id, // on récupère l'id du médicament
-                    ...doc.data(), // on récupère les données du médicament
-                }));
-                setMedicaments(medicamentsData);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des médicaments :", error);
+          if (!user) return;
+          try {
+            const q = query(collection(db, "medicaments"), where("uid", "==", user.uid));
+            const querySnapshot = await getDocs(q);
+      
+            const updatedMedicaments = [];
+      
+            for (const docSnap of querySnapshot.docs) {
+              const data = docSnap.data();
+      
+              if (!data.lastUpdated || isDateBeforeToday(data.lastUpdated)) {
+                // Réinitialiser pris à false si ce n'est pas la même date
+                const docRef = doc(db, "medicaments", docSnap.id);
+                await updateDoc(docRef, {
+                  pris: false,
+                  lastUpdated: Timestamp.now(),
+                });
+      
+                updatedMedicaments.push({ id: docSnap.id, ...data, pris: false, lastUpdated: Timestamp.now() });
+              } else {
+                updatedMedicaments.push({ id: docSnap.id, ...data });
+              }
             }
+      
+            setMedicaments(updatedMedicaments);
+          } catch (error) {
+            console.error("Erreur lors de la récupération des médicaments :", error);
+          }
         };
-
+      
         fetchMedicaments();
-    }, [user]);
+      }, [user]);
 
     if (loading || !user) {
         return null;
@@ -74,7 +101,7 @@ export default function Dashboard() {
                     medicament.id === id ? { ...medicament, pris: true } : medicament
                 )
             );
-  
+
         } catch (error) {
             console.error("Erreur lors de la mise à jour du médicament :", error);
         }
@@ -107,7 +134,7 @@ export default function Dashboard() {
                         </CardFooter>
                     </Card>
                 </div>
-                
+
                 <Card className="flex flex-col justify-between w-full h-full mt-4 bg-white/25 backdrop-blur-md shadow-xl relative z-10">
                     <CardContent className="p-6">
                         <div className="flex flex-row justify-between items-center mb-5">
@@ -122,7 +149,7 @@ export default function Dashboard() {
                         <div className="flex flex-col w-full items-center justify-center gap-4">
                             {medicaments.length > 0 ? (
                                 medicaments.map((medicament) => (
-                                    <Card key={medicament.id} className={`w-full flex flex-row justify-between items-center p-4 shadow-xl transition-colors duration-300 ${medicament.pris ? 'bg-[#455A64]/45' : 'bg-white/30 backdrop-blur-md'}`}>       
+                                    <Card key={medicament.id} className={`w-full flex flex-row justify-between items-center p-4 shadow-xl transition-colors duration-300 ${medicament.pris ? 'bg-[#455A64]/45' : 'bg-white/30 backdrop-blur-md'}`}>
                                         <div className={`${medicament.pris ? 'text-white' : 'text-black'}`}>
                                             <CardHeader className="p-0">
                                                 <h3 className={`text-lg sm:text-2xl font-bold ${medicament.pris ? 'line-through decoration-black' : ''}`}>
@@ -150,9 +177,9 @@ export default function Dashboard() {
                         </div>
                     </CardContent>
                 </Card>
-            
+
             </div>
-            
+
         </div>
     );
 }
