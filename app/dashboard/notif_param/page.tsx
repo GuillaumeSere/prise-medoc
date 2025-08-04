@@ -9,6 +9,8 @@ import useCurrentUser from "../../../src/hook/user_verif";
 import { Input } from "../../../src/components/ui/input";
 import { Button } from "../../../src/components/ui/button";
 import { sendMedicationReminder } from "../../../src/lib/email";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../src/lib/firebase";
 
 export default function NotifParam() {
     const { user } = useCurrentUser();
@@ -104,9 +106,11 @@ export default function NotifParam() {
 
         // Nettoyage lors du démontage du composant
         return () => {
-            if (fcmToken) {
-                // Vous pouvez ajouter ici la logique pour supprimer le token si nécessaire
-                console.log("Nettoyage des notifications");
+            if (fcmToken && user?.uid) {
+                setDoc(doc(db, "users", user.uid), {
+                    fcmToken: null
+                }, { merge: true });
+                console.log("Nettoyage des notifications et suppression du token FCM");
             }
         };
     }, [fcmToken]);
@@ -123,11 +127,33 @@ export default function NotifParam() {
                         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
                     });
                     setFcmToken(token);
+                    // Sauvegarder le token FCM dans Firestore (collection users)
+                    if (user?.uid && token) {
+                        try {
+                            await setDoc(doc(db, "users", user.uid), {
+                                fcmToken: token
+                            }, { merge: true });
+                            console.log("Token FCM sauvegardé dans Firestore");
+                        } catch (err) {
+                            console.error("Erreur lors de la sauvegarde du token FCM dans Firestore :", err);
+                        }
+                    }
                 }
             } else {
                 // Désactiver les notifications
                 setNotificationsEnabled(false);
                 setFcmToken(null);
+                // Supprimer le token FCM de Firestore
+                if (user?.uid) {
+                    try {
+                        await setDoc(doc(db, "users", user.uid), {
+                            fcmToken: null
+                        }, { merge: true });
+                        console.log("Token FCM supprimé de Firestore");
+                    } catch (err) {
+                        console.error("Erreur lors de la suppression du token FCM dans Firestore :", err);
+                    }
+                }
             }
         } catch (error) {
             console.error("Erreur lors de la modification des paramètres de notification :", error);

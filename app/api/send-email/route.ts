@@ -28,8 +28,9 @@ export async function POST(request: Request) {
         }
     } catch (error) {
         console.error('Erreur API:', error);
+        // Retourne l'erreur complète côté client pour le debug
         return NextResponse.json(
-            { error: 'Erreur serveur' },
+            { error: error?.message || JSON.stringify(error) || 'Erreur serveur' },
             { status: 500 }
         );
     }

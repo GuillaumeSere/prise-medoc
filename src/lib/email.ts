@@ -17,7 +17,7 @@ interface EmailOptions {
 export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Guillaume Sere <guillaumesere@hotmail.fr>', // Utilisation de l'email vérifié
+            from: 'Guillaume <prise-medoc@guillaume.com>',
             to: [to],
             subject,
             text,
@@ -25,15 +25,15 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
         });
 
         if (error) {
-            console.error('Erreur lors de l&apos;envoi de l&apos;email:', error);
-            return false;
+            console.error('Erreur lors de l\'envoi de l\'email:', error);
+            throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
         }
 
         console.log('Email envoyé avec succès:', data);
         return true;
     } catch (error) {
-        console.error('Erreur lors de l&apos;envoi de l&apos;email:', error);
-        return false;
+        console.error('Erreur lors de l\'envoi de l\'email:', error);
+        throw error;
     }
 };
 
@@ -66,5 +66,9 @@ export const sendMedicationReminder = async (userEmail: string, medicationName: 
         </div>
     `;
 
-    return sendEmail({ to: userEmail, subject, text, html });
+    try {
+        return await sendEmail({ to: userEmail, subject, text, html });
+    } catch (error) {
+        throw error;
+    }
 }; 
