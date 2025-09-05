@@ -1,5 +1,5 @@
 'use client';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../../../src/lib/firebase";
 import { Card, CardContent, CardHeader } from "../../../src/components/ui/card";
@@ -49,10 +49,10 @@ export default function ListMedic() {
         
         const fetchMedicaments = async () => {
             try {
-                const getMedicaments = await getDocs(collection(db, "medicaments"));
+                const q = query(collection(db, "medicaments"), where("uid", "==", user.uid));
+                const getMedicaments = await getDocs(q);
                 const medicamentsData = getMedicaments.docs
-                    .map((doc) => ({ id: doc.id, ...doc.data() } as Medicament))
-                    .filter((med) => med.uid === user.uid); // filtrer par utilisateur connecté
+                    .map((doc) => ({ id: doc.id, ...doc.data() } as Medicament));
                 setMedicaments(medicamentsData);
             } catch (error) {
                 console.error("Erreur lors de la récupération des médicaments :", error);

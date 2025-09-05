@@ -8,7 +8,6 @@ import { app } from "../../../src/lib/firebase";
 import useCurrentUser from "../../../src/hook/user_verif";
 import { Input } from "../../../src/components/ui/input";
 import { Button } from "../../../src/components/ui/button";
-import { sendMedicationReminder } from "../../../src/lib/email";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../src/lib/firebase";
 
@@ -58,6 +57,10 @@ export default function NotifParam() {
                 // Obtenir le token FCM
                 if (permission === "granted") {
                     try {
+                        if (!process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY) {
+                            console.warn("NEXT_PUBLIC_FIREBASE_VAPID_KEY manquant. Le token FCM ne pourra pas être généré.");
+                            return;
+                        }
                         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
                         const token = await getToken(messaging, {
                             vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
@@ -67,6 +70,17 @@ export default function NotifParam() {
                         if (token) {
                             setFcmToken(token);
                             console.log("Token FCM obtenu avec succès");
+                            // Sauvegarder le token FCM dans Firestore (collection users)
+                            if (user?.uid) {
+                                try {
+                                    await setDoc(doc(db, "users", user.uid), {
+                                        fcmToken: token
+                                    }, { merge: true });
+                                    console.log("Token FCM sauvegardé dans Firestore (init)");
+                                } catch (err) {
+                                    console.error("Erreur lors de la sauvegarde du token FCM dans Firestore (init) :", err);
+                                }
+                            }
                             
                             // Écouter les messages en arrière-plan
                             onMessage(messaging, (payload) => {
@@ -104,15 +118,8 @@ export default function NotifParam() {
 
         initializeNotifications();
 
-        // Nettoyage lors du démontage du composant
-        return () => {
-            if (fcmToken && user?.uid) {
-                setDoc(doc(db, "users", user.uid), {
-                    fcmToken: null
-                }, { merge: true });
-                console.log("Nettoyage des notifications et suppression du token FCM");
-            }
-        };
+        // Pas de suppression automatique du token lors du démontage de la page de paramètres
+        return () => {};
     }, [fcmToken]);
 
     const handleNotificationToggle = async () => {
@@ -123,8 +130,14 @@ export default function NotifParam() {
                     setNotificationsEnabled(true);
                     // Réinitialiser FCM
                     const messaging = getMessaging(app);
+                    if (!process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY) {
+                        console.warn("NEXT_PUBLIC_FIREBASE_VAPID_KEY manquant. Le token FCM ne pourra pas être généré.");
+                        return;
+                    }
+                    const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
                     const token = await getToken(messaging, {
-                        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
+                        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+                        serviceWorkerRegistration: registration
                     });
                     setFcmToken(token);
                     // Sauvegarder le token FCM dans Firestore (collection users)
@@ -176,13 +189,15 @@ export default function NotifParam() {
 
         setIsSaving(true);
         try {
+            // Pour les tests Resend, utiliser l'email de l'utilisateur connecté ou l'email saisi
+            const testEmail = user?.email || email;
             const response = await fetch('/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email,
+                    email: testEmail,
                     medicationName: "Test de notification",
                     time: new Date().toLocaleTimeString()
                 }),
@@ -197,7 +212,8 @@ export default function NotifParam() {
             }
         } catch (error) {
             console.error("Erreur lors de la sauvegarde des paramètres :", error);
-            alert("Erreur lors de l&apos;envoi de l&apos;email de test");
+            const errorMessage = error instanceof Error ? error.message : "Erreur inconnue";
+            alert(`Erreur lors de l'envoi de l'email de test: ${errorMessage}`);
         } finally {
             setIsSaving(false);
         }
