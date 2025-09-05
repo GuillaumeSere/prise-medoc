@@ -50,13 +50,20 @@ export async function GET() {
             ...doc.data()
         })) as Medicament[];
 
+        // Utiliser l'heure locale française (UTC+1 ou UTC+2 selon la saison)
         const currentTime = new Date();
-        const currentHour = currentTime.getHours();
-        const currentMinutes = currentTime.getMinutes();
+        const frenchTime = new Date(currentTime.toLocaleString("en-US", {timeZone: "Europe/Paris"}));
+        const currentHour = frenchTime.getHours();
+        const currentMinutes = frenchTime.getMinutes();
         const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
 
         console.log(`⏰ Heure actuelle: ${currentTimeString}`);
         console.log(`📋 Médicaments trouvés: ${medicaments.length}`);
+        
+        // Log détaillé des médicaments
+        medicaments.forEach(med => {
+            console.log(`💊 Médicament: ${med.nom} à ${med.heure} (pris: ${med.pris})`);
+        });
 
         let emailsEnvoyes = 0;
 
