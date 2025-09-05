@@ -1,0 +1,17 @@
+name: Medication Reminders
+
+on:
+  schedule:
+    # Exécute toutes les minutes
+    - cron: '* * * * *'
+  # Permet aussi de déclencher manuellement
+  workflow_dispatch:
+
+jobs:
+  check-medications:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Call medication check API
+      run: |
+        curl -X GET "https://votre-domaine.vercel.app/api/cron/check-medications"
