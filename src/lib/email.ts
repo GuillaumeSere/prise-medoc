@@ -17,7 +17,7 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
         const resend = new Resend(apiKey);
         const { data, error } = await resend.emails.send({
             // Utiliser un sender vérifié par Resend (remplacez par un domaine vérifié)
-            from: process.env.RESEND_FROM || 'Prise Medoc <onboarding@resend.dev>',
+            from: process.env.RESEND_FROM || 'Prise Medoc <contact@prise-medoc.fr>',
             to: [to],
             subject,
             text,
