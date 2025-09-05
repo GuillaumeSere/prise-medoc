@@ -8,7 +8,7 @@ import { app } from "../../../src/lib/firebase";
 import useCurrentUser from "../../../src/hook/user_verif";
 import { Input } from "../../../src/components/ui/input";
 import { Button } from "../../../src/components/ui/button";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../../../src/lib/firebase";
 
 export default function NotifParam() {
@@ -18,6 +18,7 @@ export default function NotifParam() {
     const [email, setEmail] = useState("");
     const [fcmToken, setFcmToken] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
+    const [isLoadingPreferences, setIsLoadingPreferences] = useState(true);
 
     useEffect(() => {
         // Initialiser l'email depuis le profil utilisateur si disponible
@@ -25,6 +26,33 @@ export default function NotifParam() {
             setEmail(user.email);
         }
     }, [user]);
+
+    // Charger les préférences de notification depuis Firestore
+    useEffect(() => {
+        const loadUserPreferences = async () => {
+            if (user?.uid) {
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        setEmailNotificationsEnabled(userData.emailNotificationsEnabled || false);
+                        if (userData.email) {
+                            setEmail(userData.email);
+                        }
+                        console.log("Préférences chargées:", userData);
+                    }
+                } catch (error) {
+                    console.error("Erreur lors du chargement des préférences:", error);
+                } finally {
+                    setIsLoadingPreferences(false);
+                }
+            } else {
+                setIsLoadingPreferences(false);
+            }
+        };
+
+        loadUserPreferences();
+    }, [user?.uid]);
 
     useEffect(() => {
         const initializeNotifications = async () => {
@@ -290,11 +318,15 @@ export default function NotifParam() {
                             <div className="flex items-center justify-between space-x-2">
                                 <Label htmlFor="email-notifications" className="flex-1">
                                     Activer les notifications par email
+                                    {isLoadingPreferences && (
+                                        <span className="text-xs text-gray-500 ml-2">(Chargement...)</span>
+                                    )}
                                 </Label>
                                 <Switch
                                     id="email-notifications"
                                     checked={emailNotificationsEnabled}
                                     onCheckedChange={handleEmailToggle}
+                                    disabled={isLoadingPreferences}
                                 />
                             </div>
 
