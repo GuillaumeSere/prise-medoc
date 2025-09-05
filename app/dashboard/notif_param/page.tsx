@@ -178,7 +178,22 @@ export default function NotifParam() {
             alert("Veuillez d&apos;abord entrer une adresse email valide");
             return;
         }
-        setEmailNotificationsEnabled(!emailNotificationsEnabled);
+        
+        const newEmailEnabled = !emailNotificationsEnabled;
+        setEmailNotificationsEnabled(newEmailEnabled);
+        
+        // Sauvegarder les préférences dans Firestore
+        if (user?.uid) {
+            try {
+                await setDoc(doc(db, "users", user.uid), {
+                    emailNotificationsEnabled: newEmailEnabled,
+                    email: email
+                }, { merge: true });
+                console.log("Préférences email sauvegardées");
+            } catch (err) {
+                console.error("Erreur sauvegarde préférences email:", err);
+            }
+        }
     };
 
     const handleSaveEmail = async () => {
@@ -189,7 +204,15 @@ export default function NotifParam() {
 
         setIsSaving(true);
         try {
-            // Pour les tests Resend, utiliser l'email de l'utilisateur connecté ou l'email saisi
+            // Sauvegarder l'email dans Firestore
+            if (user?.uid) {
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    emailNotificationsEnabled: true
+                }, { merge: true });
+            }
+
+            // Envoyer un email de test avec un vrai rappel de médicament
             const testEmail = user?.email || email;
             const response = await fetch('/api/send-email', {
                 method: 'POST',
@@ -198,7 +221,7 @@ export default function NotifParam() {
                 },
                 body: JSON.stringify({
                     email: testEmail,
-                    medicationName: "Test de notification",
+                    medicationName: "Test de rappel de médicament",
                     time: new Date().toLocaleTimeString()
                 }),
             });
@@ -206,7 +229,7 @@ export default function NotifParam() {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Email de test envoyé avec succès !");
+                alert("Email de test envoyé avec succès ! Vérifiez votre boîte email.");
             } else {
                 throw new Error(data.error || "Erreur lors de l&apos;envoi de l&apos;email");
             }
@@ -300,9 +323,31 @@ export default function NotifParam() {
 
                             {emailNotificationsEnabled && (
                                 <div className="mt-4 p-4 bg-green-50 rounded-md">
-                                    <p className="text-sm text-green-700">
+                                    <p className="text-sm text-green-700 mb-2">
                                         Vous recevrez des rappels par email à l&apos;adresse spécifiée.
                                     </p>
+                                    <Button
+                                        onClick={async () => {
+                                            try {
+                                                const response = await fetch('/api/cron/check-medications', {
+                                                    method: 'GET'
+                                                });
+                                                const data = await response.json();
+                                                if (response.ok) {
+                                                    alert(`Vérification terminée ! ${data.emailsEnvoyes} emails envoyés.`);
+                                                } else {
+                                                    alert('Erreur lors de la vérification');
+                                                }
+                                            } catch (error) {
+                                                alert('Erreur lors de la vérification');
+                                            }
+                                        }}
+                                        className="bg-green-600 hover:bg-green-700 text-white"
+                                        size="sm"
+                                        variant="default"
+                                    >
+                                        Tester les rappels maintenant
+                                    </Button>
                                 </div>
                             )}
                         </div>
