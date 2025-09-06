@@ -14,4 +14,4 @@ jobs:
     steps:
     - name: Call medication check API
       run: |
-        curl -X GET "https://votre-domaine.vercel.app/api/cron/check-medications"
+        curl -X GET "https://prise-medoc.vercel.app/api/cron/check-medications"
