@@ -3,7 +3,7 @@ name: Medication Reminders
 on:
   schedule:
     # Exécute toutes les minutes
-    - cron: '* * * * *'
+    - cron: '*/55 * * * *'
   # Permet aussi de déclencher manuellement
   workflow_dispatch:
 
