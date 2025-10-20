@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { sendMedicationReminder } from '../../../../src/lib/email';
+import { getFrenchTime, isMedicationTime, getFrenchTimeForLogs } from '../../../../src/lib/timezone';
 
 // Initialiser Firebase côté serveur
 const firebaseConfig = {
@@ -50,14 +51,15 @@ export async function GET() {
             ...doc.data()
         })) as Medicament[];
 
-        // Utiliser l'heure locale française (UTC+1 ou UTC+2 selon la saison)
+        // Obtenir l'heure française de manière fiable
         const currentTime = new Date();
-        const frenchTime = new Date(currentTime.toLocaleString("en-US", {timeZone: "Europe/Paris"}));
-        const currentHour = frenchTime.getHours();
-        const currentMinutes = frenchTime.getMinutes();
-        const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
+        const frenchTime = getFrenchTime();
+        
+        // Log pour debug - afficher l'heure UTC et française
+        console.log(`🌍 Heure UTC: ${currentTime.toISOString()}`);
+        console.log(getFrenchTimeForLogs());
 
-        console.log(`⏰ Heure actuelle: ${currentTimeString}`);
+        console.log(`⏰ Heure actuelle: ${frenchTime.timeString}`);
         console.log(`📋 Médicaments trouvés: ${medicaments.length}`);
         
         // Log détaillé des médicaments
@@ -69,10 +71,8 @@ export async function GET() {
 
         // Vérifier chaque médicament
         for (const medicament of medicaments) {
-            const [medicamentHour, medicamentMinutes] = medicament.heure.split(':').map(Number);
-            
-            // Si l'heure actuelle correspond à l'heure de prise du médicament
-            if (currentHour === medicamentHour && currentMinutes === medicamentMinutes) {
+            // Utiliser la fonction utilitaire pour vérifier l'heure
+            if (isMedicationTime(medicament.heure)) {
                 console.log(`💊 Rappel pour ${medicament.nom} à ${medicament.heure}`);
                 
                 // Récupérer les informations de l'utilisateur
@@ -106,7 +106,8 @@ export async function GET() {
         return NextResponse.json({ 
             message: `Vérification terminée. ${emailsEnvoyes} emails envoyés.`,
             emailsEnvoyes,
-            heureVerification: currentTimeString
+            heureVerification: frenchTime.timeString,
+            dateVerification: frenchTime.dateString
         });
 
     } catch (error) {
