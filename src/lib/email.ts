@@ -11,28 +11,47 @@ export const sendEmail = async ({ to, subject, text, html }: EmailOptions) => {
     try {
         const apiKey = process.env.RESEND_API_KEY;
         if (!apiKey) {
+            console.error('RESEND_API_KEY manquant');
             throw new Error('RESEND_API_KEY manquant. Ajoutez-le dans .env.local et redémarrez le serveur.');
         }
 
+        const fromEmail = process.env.RESEND_FROM;
+        if (!fromEmail) {
+            console.error('RESEND_FROM manquant');
+            throw new Error('RESEND_FROM manquant dans .env.local');
+        }
+
         const resend = new Resend(apiKey);
+        console.log('Tentative d\'envoi d\'email à:', to);
         const { data, error } = await resend.emails.send({
-            // Utiliser un sender vérifié par Resend (remplacez par un domaine vérifié)
-            from: process.env.RESEND_FROM || 'Prise Medoc <contact@prise-medoc.fr>',
+            from: fromEmail,
             to: [to],
             subject,
             text,
             html: html || text,
+            headers: {
+                'X-Entity-Ref-ID': Date.now().toString(), // Identifiant unique pour chaque email
+            }
         });
 
         if (error) {
-            console.error('Erreur lors de l\'envoi de l\'email:', error);
+            console.error('Erreur Resend lors de l\'envoi:', error);
             throw new Error(typeof error === 'string' ? error : JSON.stringify(error));
         }
 
-        console.log('Email envoyé avec succès:', data);
+        if (!data?.id) {
+            console.error('Aucun ID d\'email retourné par Resend');
+            throw new Error('Échec de l\'envoi de l\'email');
+        }
+
+        console.log('Email envoyé avec succès:', { id: data.id, to });
         return true;
     } catch (error) {
-        console.error('Erreur lors de l\'envoi de l\'email:', error);
+        console.error('Erreur détaillée lors de l\'envoi:', error);
+        if (error instanceof Error) {
+            console.error('Message d\'erreur:', error.message);
+            console.error('Stack trace:', error.stack);
+        }
         throw error;
     }
 };
